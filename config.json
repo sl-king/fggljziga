@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "app": {
+    "title": "FGG LJ Ziga - Dynamic Configuration Demo",
+    "logo": "/_root2/assets/kingprostor.svg",
+    "theme": "default"
+  },
+  "layers": {
+    "sources": [
+      "./layers_ol_my.js"
+    ],
+    "overrides": {
+      "ly_cloudfiles": {
+        "visible": true
+      }
+    }
+  },
+  "features": {
+    "sidebar": true,
+    "measurements": true,
+    "photoUpload": true,
+    "opinions": true,
+    "search": true,
+    "share": true,
+    "print": true,
+    "serial": true
+  },
+  "ui": {
+    "primaryColor": "#3FADEB",
+    "accentColor": "#ff9800",
+    "showCoordinates": false,
+    "mobileBreakpoint": 650
+  },
+  "map": {
+    "defaultProjection": "EPSG:3857",
+    "defaultExtent": [1482571.233492974, 5707808.452951475, 1859049.32487932, 5890655.234314895],
+    "minZoom": 6,
+    "maxZoom": 20
+  }
+}
