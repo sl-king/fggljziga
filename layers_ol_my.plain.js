@@ -65,8 +65,8 @@
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           stroke: new olStroke({
-            color: "red",
-            width: 3,
+            color: "blue",
+            width: 9,
           }),
           fill: new olFill({
             color: "rgba(255,0,0,0.1)"
