@@ -51,7 +51,7 @@
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           image: new olCircle({
             radius: 9,
-            fill: new olFill({ color: "blue" }),
+            fill: new olFill({ color: "red" }),
             stroke: new olStroke({ color: "white", width: 3 }),
           }),
         }));
@@ -65,7 +65,7 @@
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           stroke: new olStroke({
-            color: "blue",
+            color: "red",
             width: 9,
           }),
           fill: new olFill({
