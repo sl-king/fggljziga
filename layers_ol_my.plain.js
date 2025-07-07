@@ -289,11 +289,11 @@
     ],
     
     // Feature describer function
-    describeFeature: function(feature, layer) {
+    describeFeature: function(layer, feature) {
       const layerId = layer.get('id');
       
       if (layerId === 'lyid_sxid_geo_nacrt') {
-        const gsx_id = feature.get('gsx_id');
+        const gsx_id = feature.get('GSX_ID');
         return {
           table: [
             ['ID', gsx_id || 'N/A']
@@ -302,11 +302,11 @@
       }
       
       if (layerId === 'lyid_cloudfiles') {
-        const fname = feature.get('fname');
-        const dname = feature.get('dname');
-        const task = feature.get('task');
-        const date = feature.get('date_modified');
-        const owner = feature.get('owner_firstname');
+        const fname = feature.get('FNAME');
+        const dname = feature.get('DNAME');
+        const task = feature.get('TASK');
+        const date = feature.get('DATE_MODIFIED');
+        const owner = feature.get('OWNER_FIRSTNAME');
         
         return {
           table: [
@@ -320,14 +320,14 @@
       }
       
       if (layerId === 'lyid_mg_parcele') {
-        const parcela = feature.get('st_parcele');
-        const ko = feature.get('imeko');
-        const lastnik = feature.get('last1_ime');
-        const povrsina = feature.get('povrsina');
-        const raba = feature.get('namenska_raba');
-        const sluznost = feature.get('sluznost');
-        const soglasje = feature.get('soglasje');
-        const mnenja = feature.get('mnenja');
+        const parcela = feature.get('ST_PARCELE');
+        const ko = feature.get('IMEKO');
+        const lastnik = feature.get('LAST1_IME');
+        const povrsina = feature.get('POVRSINA');
+        const raba = feature.get('NAMENSKA_RABA');
+        const sluznost = feature.get('SLUZNOST');
+        const soglasje = feature.get('SOGLASJE');
+        const mnenja = feature.get('MNENJA');
         
         return {
           table: [
@@ -347,7 +347,7 @@
       return {
         table: [
           ['Layer', layerId],
-          ['Feature ID', (feature.getId && feature.getId()) || feature.get('gsx_id') || 'N/A']
+          ['Feature ID', (feature.getId && feature.getId()) || feature.get('GSX_ID') || 'N/A']
         ]
       };
     },

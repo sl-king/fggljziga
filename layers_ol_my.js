@@ -30,7 +30,7 @@ const ly_sxid_geo_nacrt_style = function (feature) {
     if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
       ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
         image: new olCircle({
-          radius: 9,
+          radius: 29,
           fill: new olFill({ color: "red" }),
           stroke: new olStroke({ color: "white", width: 3 }),
         }),
