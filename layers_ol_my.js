@@ -15,6 +15,7 @@ import { bbox as olBbox } from 'https://cdn.skypack.dev/ol/loadingstrategy.js';
 
 import { d96proj, osmproj } from '/_root2/king_js/layers_ol/projections.js';
 import { appContext } from '/_root2/king_js/app_context/app_context.js';
+import { fetchVisiblePhotos } from '/_root2/king_js/photoview/photoView3.js';
 
 //-------------------------------------------------
 // sxid_geo_nacrt
@@ -268,6 +269,22 @@ const sidebarItems = [
     zoomTextId: "webserial_zoom",
     icon: "/_root2/assets/box.svg",
     maxResolution: 100
+  },
+  {
+    type: "button",
+    label: "Pregled slik v pogledu",
+    buttonId: "btn_photos",
+    onClick: () => fetchVisiblePhotos(),
+  },
+  {
+    type: "button",
+    label: "Dodaj fotografijo",
+    buttonId: "photo-upload-btn",
+    onClick: () => {
+      if (appContext.photoUploadModule) {
+        appContext.photoUploadModule.PhotoUpload_Open();
+      }
+    },
   }
 ];
 

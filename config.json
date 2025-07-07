@@ -7,7 +7,7 @@
   },
   "layers": {
     "sources": [
-      "./layers_ol_my.plain.js"
+      "https://raw.githubusercontent.com/sl-king/fggljziga/main/layers_ol_my.plain.js"
     ],
     "overrides": {
       "ly_cloudfiles": {

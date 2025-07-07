@@ -51,7 +51,7 @@
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           image: new olCircle({
             radius: 9,
-            fill: new olFill({ color: "blue" }),
+            fill: new olFill({ color: "red" }),
             stroke: new olStroke({ color: "white", width: 3 }),
           }),
         }));
@@ -65,7 +65,7 @@
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           stroke: new olStroke({
-            color: "blue",
+            color: "red",
             width: 9,
           }),
           fill: new olFill({
@@ -285,6 +285,26 @@
         zoomTextId: "webserial_zoom",
         icon: "/_root2/assets/box.svg",
         maxResolution: 100
+      },
+      {
+        type: "button",
+        label: "Pregled slik v pogledu",
+        buttonId: "btn_photos",
+        onClick: function() {
+          if (window.fetchVisiblePhotos) {
+            window.fetchVisiblePhotos();
+          }
+        }
+      },
+      {
+        type: "button",
+        label: "Dodaj fotografijo",
+        buttonId: "photo-upload-btn",
+        onClick: function() {
+          if (appContext.photoUploadModule) {
+            appContext.photoUploadModule.PhotoUpload_Open();
+          }
+        }
       }
     ],
     
