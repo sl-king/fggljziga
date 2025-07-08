@@ -302,21 +302,70 @@ function describeFeature(feature, layer) {
   }
   
   if (layerId === 'lyid_cloudfiles') {
-    const fname = feature.get('fname');
-    const dname = feature.get('dname');
-    const task = feature.get('task');
-    const date = feature.get('date_modified');
-    const owner = feature.get('owner_firstname');
+    const fname = feature.get('FNAME');
+    const dname = feature.get('DNAME');
+    const task = feature.get('TASK');
+    const dateModified = feature.get('DATE_MODIFIED');
+    const owner = feature.get('OWNER_FIRSTNAME');
+    const gsxId = feature.get('GSX_ID');
+    const worktype = feature.get('WORKTYPE') || '';
+    const notes = feature.get('NOTES') || '';
     
-    return {
-      table: [
-        ['Datoteka', fname || 'N/A'],
-        ['Mapa', dname || 'N/A'],
-        ['Opravilo', task || 'N/A'],
-        ['Datum', date || 'N/A'],
-        ['Lastnik', owner || 'N/A']
-      ]
-    };
+    // Calculate relative time
+    const now = new Date();
+    const modifiedDate = new Date(dateModified * 1000);
+    const diffInMs = now - modifiedDate;
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    
+    let dateStr;
+    if (diffInMinutes < 2) {
+      dateStr = `moment ago`;
+    } else if (diffInMinutes < 60) {
+      dateStr = `${diffInMinutes} minutes ago`;
+    } else if (diffInHours < 24) {
+      dateStr = `${diffInHours}h ago`;
+    } else if (diffInDays < 14) {
+      dateStr = `${diffInDays}d ago`;
+    } else {
+      dateStr = modifiedDate.toLocaleDateString();
+    }
+    
+    // Build HTML like in gvo_test2
+    let htmltext = '';
+    
+    // Show directory name if different from filename
+    if (dname && dname !== '' && dname !== fname) {
+      htmltext += `<p><span class="popup-content-middle">${dname}</span></p>`;
+    }
+    
+    // Check if it's an image file
+    const isImage = fname && /\.(jpg|jpeg|png)$/i.test(fname);
+    
+    if (isImage && gsxId) {
+      // Show image directly in popup (not as thumbnail)
+      htmltext += `<p><img class="" src="_sx1/cloudfiles/sxid_cloudfiles/d?id=${gsxId}" alt="${fname}" style="cursor: pointer; max-width: 100%;" onclick="if(window.popupInfo) window.popupInfo.openPhotoFullscreen('${gsxId}', '${fname || 'Photo'}', '${owner || ''}', '${dateStr || ''}', '${worktype || ''}', '${task || ''}')"></p>`;
+    } else {
+      // For non-image files, show filename as link
+      htmltext += `<p><span class="popup-content-middle">${fname}</span></p>`;
+    }
+    
+    // Add worktype, task, notes
+    if (worktype) {
+      htmltext += `<p><span class="">${worktype}</span></p>`;
+    }
+    if (task) {
+      htmltext += `<p><span class="">${task}</span></p>`;
+    }
+    if (notes) {
+      htmltext += `<p><span class="span2">${notes}</span></p>`;
+    }
+    
+    // Owner and date with edit button
+    htmltext += `<p><span class="span1">${owner || ''} ${dateStr}</span><span class="span-right"><button class="photo-edit-btn" data-lyid="${layerId}" data-fid="${gsxId}" style="background-color: lightgray; border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;"><img src="/_root2/assets/three-dots-svgrepo-com.svg" alt="Edit" style="width: 16px; height: 16px;"></button></span></p>`;
+    
+    return { title: "", html: htmltext };
   }
   
   if (layerId === 'lyid_mg_parcele') {
