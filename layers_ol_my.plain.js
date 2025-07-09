@@ -45,18 +45,33 @@
     const geomType = feature.getGeometry().getType();
     
     if (geomType === "Point") {
-      const cacheKey = "point:red";
-      
+      const gsxId = feature.get("gsx_id") || "";
+      const code = gsxId.match(/[A-Za-z]/g)?.join('') || "X"; // poberemo vse crke, ce je posneta tocka poimenovana 
+                                                              //JK1 bo ta postopek najprej loceno nasel J in K ter ju 
+                                                              //ponovno zduzil v JK preko ?.join('')
+      // Barve po kodi (dodaj po potrebi)
+      const colorByCode = {
+        G: "blue",
+        K: "red",
+        L: "green",
+        M: "orange",
+        X: "gray" // fallback
+      };
+    
+      const color = colorByCode[code] || "gray"; // ce ni definirana koda → siva
+    
+      const cacheKey = `point:${code}`;
+    
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           image: new olCircle({
-            radius: 7, //Spremenil iz 9 na 7
-            fill: new olFill({ color: "blue" }), //Spremenil iz red na blue
+            radius: 7,
+            fill: new olFill({ color: color }),
             stroke: new olStroke({ color: "white", width: 3 }),
           }),
         }));
       }
-      
+    
       return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
       
     } else {
