@@ -156,7 +156,7 @@
           image: new olCircle({
             radius: 7,
             fill: new olFill({ color: color }),
-            stroke: new olStroke({ color: "white", width: 0.5 }),
+            stroke: new olStroke({ color: "white", width: 0.05 }),
           }),
         }));
       }
