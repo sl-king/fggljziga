@@ -50,7 +50,7 @@
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           image: new olCircle({
-            radius: 5, //Spremenil iz 9 na 5
+            radius: 7, //Spremenil iz 9 na 7
             fill: new olFill({ color: "blue" }), //Spremenil iz red na blue
             stroke: new olStroke({ color: "white", width: 3 }),
           }),
