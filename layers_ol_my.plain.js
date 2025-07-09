@@ -51,6 +51,7 @@
                                                               //ponovno zduzil v JK preko ?.join('')
       // Barve po kodi (dodaj po potrebi)
       const colorByCode = {
+        C: "#A1632E",
         TGT: "#000000",
         TGTE: "#1a1a1a",
         IGT: "#333333",
