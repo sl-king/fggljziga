@@ -155,7 +155,7 @@
       const color = colorByCode[code] || "gray";
   
       // --- Prikaz SVG pri višjih zoomih ---
-      if (zoom >= 20) {
+      if (zoom >= 21) {
         const svgPath = `file:///C:/Users/coyzi/!MAG/${code}.svg`; 
         const cacheKey = `svg:${code}`;
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
