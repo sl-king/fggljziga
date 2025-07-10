@@ -45,8 +45,8 @@
     const geomType = feature.getGeometry().getType();
     
     if (geomType === "Point") {
-      const gsxId = feature.get("gsx_id") || "";
-      const code = gsxId.match(/[A-Za-z]/g)?.join('') || "X"; // poberemo vse crke, ce je posneta tocka poimenovana 
+      const st = feature.get("ST") || "";
+      const code = st.match(/[A-Za-z]/g)?.join('') || "X"; // poberemo vse crke, ce je posneta tocka poimenovana 
                                                               //JK1 bo ta postopek najprej loceno nasel J in K ter ju 
                                                               //ponovno zduzil v JK preko ?.join('')
       // Barve po kodi (dodaj po potrebi)
@@ -149,7 +149,6 @@
       };
     
       const color = colorByCode[code] || "gray"; // ce ni definirana koda → siva
-    
       const cacheKey = `point:${code}`;
     
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
@@ -157,7 +156,7 @@
           image: new olCircle({
             radius: 7,
             fill: new olFill({ color: color }),
-            stroke: new olStroke({ color: "white", width: 0.05 }),
+            stroke: new olStroke({ color: "white", width: 0. }),
           }),
         }));
       }
@@ -189,7 +188,7 @@
     source: new olVectorSource({
       url: function (extent) {
         let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
-        let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id&bbox=" + ext2.join(",");
+        let u = "_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST&bbox=" + ext2.join(",");
         return u;
       },
       format: new olGeoJSON({
