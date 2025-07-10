@@ -155,7 +155,7 @@
       const color = colorByCode[code] || "gray";
   
       // --- Prikaz SVG pri višjih zoomih ---
-      if (zoom >= 20) {
+      if (zoom >= 19) {
         const svgPath = `file:///C:/Users/coyzi/!MAG/${code}.svg`; 
         const cacheKey = `svg:${code}`;
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
@@ -433,6 +433,7 @@
     ],
     
     // Feature describer function
+    // Dodal sem, da s klikom na točko dobimo podatek o Številki in Kodi
     describeFeature: function(layer, feature) {
       const layerId = layer.get('id');
       
