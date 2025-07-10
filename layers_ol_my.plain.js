@@ -154,7 +154,7 @@
       const color = colorByCode[code] || "gray";
   
       // --- Prikaz kroga pri nižjih zoomih ---
-      if (zoom <= 8) {
+      if (zoom >= 8) {
         const cacheKey = `circle:${code}`;
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
           ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
