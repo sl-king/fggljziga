@@ -418,10 +418,15 @@
       const layerId = layer.get('id');
       
       if (layerId === 'lyid_sxid_geo_nacrt') {
-        const gsx_id = feature.get('GSX_ID');
+          const gsx_id = feature.get('GSX_ID') || 'N/A';
+          const st = feature.get('ST') || '';
+          const stev = st.match(/\d+/g)?.join('') || '';
+          const code = st.match(/[A-Za-z]/g)?.join('') || 'X';
         return {
           table: [
-            ['ID', gsx_id || 'N/A']
+            ['ID', gsx_id],
+            ['Številka', stev],
+            ['Koda', code]
           ]
         };
       }
