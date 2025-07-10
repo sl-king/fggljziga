@@ -189,7 +189,7 @@
     source: new olVectorSource({
       url: function (extent) {
         let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
-        let u = "_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,stev,code&bbox=" + ext2.join(",");
+        let u = "_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST&bbox=" + ext2.join(",");
         return u;
       },
       format: new olGeoJSON({
