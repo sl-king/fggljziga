@@ -153,12 +153,13 @@
   
       const color = colorByCode[code] || "gray";
   
-      // --- Prikaz kroga pri nižjih zoomih ---
-      if (zoom >= 8) {
-        const cacheKey = `circle:${code}`;
+      // --- Prikaz SVG pri višjih zoomih ---
+      if (zoom >= 17) {
+        const svgPath = `file:///C:/Users/coyzi/!MAG/${code}.svg`; 
+        const cacheKey = `svg:${code}`;
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
           ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-            image: new olCircle({
+            image: new olIcon({
               src: svgPath,
               scale: 0.08,
               anchor: [0.5, 1],
@@ -168,9 +169,8 @@
         return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
       }
   
-      // --- Prikaz SVG pri višjih zoomih ---
-      const svgPath = `C:/Users/coyzi/!MAG/${code}.svg`;  
-      const cacheKey = `svg:${code}`;
+      // --- Prikaz barvnega kroga pri nižjih zoomih ---
+      const cacheKey = `circle:${code}`;
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           image: new olCircle({
@@ -181,9 +181,8 @@
         }));
       }
   
-      return ly_sxid_geo_nacrt_style_cache.get(cacheKey);;
-        
-    } else {
+      return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+    }else {
       const cacheKey = "stroke:red";
       
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
