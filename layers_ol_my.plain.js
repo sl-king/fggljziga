@@ -424,9 +424,9 @@
           const code = st.match(/[A-Za-z]/g)?.join('') || 'X';
         return {
           table: [
-            ['ID', gsx_id],
-            ['Številka', stev],
-            ['Koda', code]
+              ['ID', gsx_id],
+              ['Številka', stev],
+              ['Koda', code]
           ]
         };
       }
