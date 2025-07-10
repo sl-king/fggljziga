@@ -418,10 +418,10 @@
       const layerId = layer.get('id');
       
       if (layerId === 'lyid_sxid_geo_nacrt') {
-        const stev = st.match(/\d+/g)?.join('') || "";
+        const gsx_id = feature.get('GSX_ID');
         return {
           table: [
-            ['Številka', stev || 'N/A']
+            ['ID', gsx_id || 'N/A']
           ]
         };
       }
