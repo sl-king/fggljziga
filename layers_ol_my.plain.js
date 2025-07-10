@@ -53,9 +53,9 @@
       // Barve po kodi (dodaj po potrebi)
       const colorByCode = {
         C: "#A1632E",
-        TGT: "#000000",
-        TGTE: "#1a1a1a",
-        IGT: "#333333",
+        TGT: "#000099",
+        TGTE: "#FF3399",
+        IGT: "#00CC00",
         IGTE: "#4d4d4d",
         PG: "#666666",
         FR: "#808080",
