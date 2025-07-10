@@ -159,9 +159,9 @@
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
           ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
             image: new olCircle({
-              radius: 7,
-              fill: new olFill({ color }),
-              stroke: new olStroke({ color: "white", width: 0 }),
+              src: svgPath,
+              scale: 0.08,
+              anchor: [0.5, 1],
             }),
           }));
         }
@@ -173,10 +173,10 @@
       const cacheKey = `svg:${code}`;
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-          image: new olIcon({
-            src: svgPath,
-            scale: 0.08, // prilagodi velikost
-            anchor: [0.5, 1],
+          image: new olCircle({
+            radius: 7,
+            fill: new olFill({ color }),
+            stroke: new olStroke({ color: "white", width: 0 }),
           }),
         }));
       }
