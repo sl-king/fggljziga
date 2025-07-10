@@ -46,6 +46,7 @@
     
     if (geomType === "Point") {
       const st = feature.get("ST") || "";
+      const stev = st.match(/\d+/g)?.join('') || ""; 
       const code = st.match(/[A-Za-z]/g)?.join('') || "X"; // poberemo vse crke, ce je posneta tocka poimenovana 
                                                               //JK1 bo ta postopek najprej loceno nasel J in K ter ju 
                                                               //ponovno zduzil v JK preko ?.join('')
