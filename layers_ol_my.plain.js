@@ -39,7 +39,7 @@
   //-------------------------------------------------
   // sxid_geo_nacrt
   //-------------------------------------------------
-   const ly_sxid_geo_nacrt_style_cache = new Map();
+  const ly_sxid_geo_nacrt_style_cache = new Map();
   
   const ly_sxid_geo_nacrt_style = function (feature) {
     const geomType = feature.getGeometry().getType();
