@@ -25,7 +25,7 @@
     olTransformExtent,
     olBbox,
     olIcon,
-    olStyleIcon = ol.style.Icon;
+    olStyleIcon = ol.style.Icon;  //Dodal sem to a ne dela .svg, plus dodatno pokvari kodo
   } = window;
   
   // Get projections and app context from window
