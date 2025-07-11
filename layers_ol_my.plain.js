@@ -157,7 +157,7 @@
   
       // --- Prikaz SVG pri višjih zoomih ---
       if (zoom >= 21) {
-        const svgPath = `/_root2/assets/${code}.svg?v=${Date.now()}`;
+        const svgPath = `https://github.com/sl-king/fggljziga/blob/main/svg/${code}.svg?v=${Date.now()}`;
         const cacheKey = `svg:${code}`;
         
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
