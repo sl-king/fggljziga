@@ -24,8 +24,8 @@
     olGeoJSON,
     olTransformExtent,
     olBbox,
-    olStyleIcon,
-    ol.style.Icon
+    olIcon,
+    olStyleIcon 
   } = window;
   
   // Get projections and app context from window
