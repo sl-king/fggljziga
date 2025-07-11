@@ -156,20 +156,24 @@
   
       // --- Prikaz SVG pri višjih zoomih ---
       if (zoom >= 21) {
-        const svgPath = `file:///C:/Users/coyzi/!MAG/${code}.svg`; 
+        const svgPath = `/_root2/assets/${code}.svg?v=${Date.now()}`;
         const cacheKey = `svg:${code}`;
+        
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
           ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
             image: new olIcon({
               src: svgPath,
-              scale: 0.08,
-              anchor: [0.5, 1],
+              scale: radius / 25,
+              anchor: [0.5, 0.5],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'fraction',
+              crossOrigin: 'anonymous'
             }),
           }));
         }
         return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
       }
-  
+      
       // --- Prikaz barvnega kroga pri nižjih zoomih ---
       const cacheKey = `circle:${code}`;
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
