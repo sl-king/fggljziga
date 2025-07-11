@@ -22,7 +22,7 @@
     olStroke,
     olText,
     olGeoJSON,
-    olTransformExtent, 
+    olTransformExtent,
     olBbox
   } = window;
   
@@ -44,7 +44,7 @@
   const ly_sxid_geo_nacrt_style = function (feature) {
     const geomType = feature.getGeometry().getType();
     const zoom = appContext.map.getView().getZoom();
-  
+    
     if (geomType === "Point") {
       const st = feature.get("ST") || "";
       const stev = st.match(/\d+/g)?.join('') || ""; 
@@ -181,9 +181,10 @@
           }),
         }));
       }
-  
+      
       return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
-    }else {
+      
+    } else {
       const cacheKey = "stroke:red";
       
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
@@ -208,7 +209,7 @@
     source: new olVectorSource({
       url: function (extent) {
         let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
-        let u = "_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST&bbox=" + ext2.join(",");
+        let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,Z,OZNAKA,OPOMBA,DATUM_MERITVE&bbox=" + ext2.join(",");
         return u;
       },
       format: new olGeoJSON({
@@ -220,6 +221,39 @@
     maxResolution: 20,
     style: ly_sxid_geo_nacrt_style,
     visible: true,
+    // Metadata for MapLibre compatibility
+    metadata: {
+      king_editable: {
+        enabled: true,
+        fields: [
+          {
+            name: 'OZNAKA',
+            label: 'Oznaka',
+            type: 'text',
+            maxLength: 50,
+            placeholder: 'Vnesite oznako'
+          },
+          {
+            name: 'OPOMBA',
+            label: 'Opomba',
+            type: 'text',  // Changed from textarea to text for simpler inline editing
+            maxLength: 200,
+            placeholder: 'Vnesite opombo'
+          }
+        ],
+        // No geometry editing for simplest experience
+        updateEndpoint: '_sx1/sxtables/sxid_geo_nacrt/data',
+        deleteEndpoint: '_sx1/sxtables/sxid_geo_nacrt/data',
+        permissions: {
+          edit: 'all'  // Everyone can edit
+        },
+        ui: {
+          editMode: 'inline',  // Force inline editing for simplest experience
+          allowDelete: false,  // Don't allow deletion
+          editButtonIcon: '/_root2/assets/three-dots-svgrepo-com.svg'
+        }
+      }
+    }
   });
   
   //-------------------------------------------------
@@ -433,20 +467,64 @@
     ],
     
     // Feature describer function
-    // Dodal sem, da s klikom na točko dobimo podatek o Številki in Kodi
     describeFeature: function(layer, feature) {
       const layerId = layer.get('id');
       
       if (layerId === 'lyid_sxid_geo_nacrt') {
-          const st = feature.get('ST') || '';
+        const gsx_id = feature.get('GSX_ID');
+        const st = feature.get('ST');
           const stev = st.match(/\d+/g)?.join('') || '';
           const code = st.match(/[A-Za-z]/g)?.join('') || 'X';
-        return {
+        const z = feature.get('Z');
+        const oznaka = feature.get('OZNAKA');
+        const opomba = feature.get('OPOMBA');
+        const datum_meritve = feature.get('DATUM_MERITVE');
+        
+        // Check if this layer is editable
+        const metadata = layer.get('metadata');
+        const kingEditable = metadata?.king_editable;
+        const isEditable = kingEditable?.enabled;
+        
+        // Format epoch timestamp to readable date
+        let datumText = 'N/A';
+        if (datum_meritve) {
+          try {
+            const date = new Date(datum_meritve * 1000); // Convert from seconds to milliseconds
+            datumText = date.toLocaleString('sl-SI', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit'
+            });
+          } catch (e) {
+            datumText = datum_meritve;
+          }
+        }
+        
+        // For consistency, pass empty values as empty strings instead of 'N/A'
+        // This creates a cleaner display
+        const response = {
           table: [
-            ['Številka:', stev],
-            ['Koda:', code]
+            ['ID', gsx_id || ''],
+            ['Številka', stev || ''],
+            ['Koda', code || ''],
+            ['Z', z || ''],
+            ['Oznaka', oznaka || ''],
+            ['Opomba', opomba || ''],
+            ['Datum meritve', datumText === 'N/A' ? '' : datumText]
           ]
         };
+        
+        // Add editable configuration if enabled
+        if (isEditable) {
+          response.editable = true;
+          response.editConfig = kingEditable;
+          response.featureId = feature.get('GSX_ID');
+        }
+        
+        return response;
       }
       
       if (layerId === 'lyid_cloudfiles') {
