@@ -155,7 +155,16 @@
       };
   
       const color = colorByCode[code] || "gray";
-  
+
+      
+      // --- Dinamični scale glede na zoom ---
+      let scale = 0.4;
+      if (zoom >= 22) {
+        scale = 1.2;
+      } else if (zoom >= 21) {
+        scale = 0.6;
+      }
+      
       // --- Prikaz SVG pri višjih zoomih ---
       if (zoom >= 21) {
         const svgPath = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
