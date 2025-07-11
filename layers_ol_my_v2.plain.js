@@ -166,6 +166,20 @@
             }),
           }));
         }
+        return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+      }
+  
+      // --- Prikaz barvnega kroga pri nižjih zoomih ---
+      const cacheKey = `circle:${code}`;
+      if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
+        ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+          image: new olCircle({
+            radius: 5,
+            fill: new olFill({ color }),
+            stroke: new olStroke({ color: "white", width: 0 }),
+          }),
+        }));
+      }
       
       return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
       
