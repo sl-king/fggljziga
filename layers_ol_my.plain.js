@@ -24,7 +24,6 @@
     olGeoJSON,
     olTransformExtent,
     olBbox,
-    olIcon,
     olStyleIcon,
     ol.style.Icon
   } = window;
