@@ -163,7 +163,7 @@
         
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
           ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-            image: new olStyle.Icon({
+            image: new olStyleIcon({
               src: svgPath,
               scale: radius / 25,
               anchor: [0.5, 0.5],
