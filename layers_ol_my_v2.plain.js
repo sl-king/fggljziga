@@ -473,6 +473,8 @@
       if (layerId === 'lyid_sxid_geo_nacrt') {
         const gsx_id = feature.get('GSX_ID');
         const st = feature.get('ST');
+          const stev = st.match(/\d+/g)?.join('') || '';
+          const code = st.match(/[A-Za-z]/g)?.join('') || 'X';
         const z = feature.get('Z');
         const oznaka = feature.get('OZNAKA');
         const opomba = feature.get('OPOMBA');
@@ -506,7 +508,8 @@
         const response = {
           table: [
             ['ID', gsx_id || ''],
-            ['ST', st || ''],
+            ['Številka', stev || ''],
+            ['Koda', code || ''],
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
