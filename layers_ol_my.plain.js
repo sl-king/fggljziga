@@ -23,7 +23,8 @@
     olText,
     olGeoJSON,
     olTransformExtent,
-    olBbox
+    olBbox,
+    olIcon
   } = window;
   
   // Get projections and app context from window
