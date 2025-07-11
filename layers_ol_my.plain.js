@@ -25,7 +25,7 @@
     olTransformExtent,
     olBbox,
     olIcon,
-    olStyleIcon
+    olStyleIcon = ol.style.Icon
   } = window;
   
   // Get projections and app context from window
