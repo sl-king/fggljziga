@@ -90,6 +90,7 @@
           OB: "#3e3e3e",
           MOST: "#535353",
           ORI: "505050",
+          SEM: "#b266ff",
         
           IZV: "#00ffff",
           PIZV: "#00e6e6",
