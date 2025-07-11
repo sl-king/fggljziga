@@ -1,13 +1,13 @@
 {
   "version": "1.0",
   "app": {
-    "title": "FGG LJ Ziga - Dynamic Configuration Demo",
+    "title": "FGG LJ Ziga ",
     "logo": "/_root2/assets/kingprostor.svg",
     "theme": "default"
   },
   "layers": {
     "sources": [
-      "layers_ol_my.plain.js"
+      "layers_ol_my_v2.plain.js"
     ],
     "overrides": {
       "ly_cloudfiles": {
