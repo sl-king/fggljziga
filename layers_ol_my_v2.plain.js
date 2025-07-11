@@ -43,6 +43,7 @@
   
   const ly_sxid_geo_nacrt_style = function (feature) {
     const geomType = feature.getGeometry().getType();
+    const zoom = appContext.map.getView().getZoom();
     
     if (geomType === "Point") {
       const st = feature.get("ST") || "";
