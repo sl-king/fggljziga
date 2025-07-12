@@ -46,6 +46,9 @@ const ly_sxid_geo_nacrt_style = function (feature) {
   const geomType = feature.getGeometry().getType();
   const zoom = appContext.map.getView().getZoom();
 
+  // Poskusi pridobiti ol.style.Icon iz window
+  const olIcon = window.ol?.style?.Icon;
+
   // --- Za LINE/POLYGON geometrije ---
   if (geomType !== "Point") {
     const cacheKey = "stroke:red";
@@ -89,11 +92,11 @@ const ly_sxid_geo_nacrt_style = function (feature) {
   const color = colorByCode[code] || "gray";
 
   // --- SVG stil pri velikem zoomu ---
-  if (zoom >= 21) {
+  if (zoom >= 21 && olIcon) {
     const cacheKey = `svg:${code}`;
     if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
       ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-        image: new ol.style.Icon({
+        image: new olIcon({
           src: `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`,
           scale: 0.08,
           anchor: [0.5, 1],
