@@ -71,7 +71,7 @@ const ly_sxid_geo_nacrt_style = function (feature) {
   const colorByCode = {
     C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
     PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
-    MZD: "#e6e6e6", STOP: "#262626", CER: "#404040", DIM: "#5c5c5c", NSSP: "#737373",
+    MZD: "#e6e6e6", STOP: "#262626", CERK: "#404040", DIM: "#5c5c5c", NSSP: "#737373",
     NSSO: "#8c8c8c", OGZ: "#a6a6a6", OGK: "#bfbfbf", ZM: "#d9d9d9", OG: "#f2f2f2",
     OPZT: "#191919", OPZ: "#2e2e2e", OPZL: "#434343", OPZZ: "#595959", VERK: "#6e6e6e",
     OSAMG: "#838383", SPOM: "#999999", D: "#aeaeae", ST: "#c3c3c3", STOLP: "#d8d8d8",
