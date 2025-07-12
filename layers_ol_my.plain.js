@@ -159,18 +159,30 @@
       
       // --- Prikaz SVG pri višjih zoomih ---
       if (zoom >= 21) {
-        const svgPath = `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`;
-        const cacheKey = `svg:${code}`;
-        if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-          ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-            image: new ol.style.Icon({
-            src: svgPath,
-            scale: 0.08,
-            anchor: [0.5, 1],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'fraction',
-            crossOrigin: 'anonymous'
-            }),   
+      const svgPath = `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`;
+      const cacheKey = `svg:${code}`;
+
+  if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
+    try {
+      ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+        image: new ol.style.Icon({
+          src: svgPath,
+          scale: 0.08,
+          anchor: [0.5, 1],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'fraction',
+          crossOrigin: 'anonymous'
+        }),
+      }));
+    } catch (e) {
+      console.warn(`Napaka pri ustvarjanju SVG stila za code=${code}`, e);
+      // Fallback na krog
+      ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+        image: new olCircle({
+          radius: 5,
+          fill: new olFill({ color }),
+          stroke: new olStroke({ color: "white", width: 0 }),
+        }),   
           }));
         }
         return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
