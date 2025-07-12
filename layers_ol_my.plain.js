@@ -169,14 +169,9 @@
             {
               name: 'OZNAKA',
               label: 'Oznaka',
-              type: 'autocomplete',
-              options: Object.keys(codeToSifra).filter(key => typeof key === 'string'), 
-              allowCustom: true, 
-              placeholder: 'Izberite ali vnesite oznako',
-              autocomplete: {
-                openOnFocus: true,  // <--- prisili prikaz vseh možnosti ob fokusu
-                filter: 'startsWith' // <--- filtrira med tipkanjem po začetku
-              }
+              type: 'text',
+              maxLength: 50,
+              placeholder: 'Vnesite oznako',
             },
             {
               name: 'OPOMBA',
