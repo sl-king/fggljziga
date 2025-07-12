@@ -159,14 +159,15 @@
       
       // --- Prikaz SVG pri višjih zoomih ---
       if (zoom >= 21) {
-        shape = new olIcon({
-        src: 'https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/TGT.svg?v=' + Date.now(),
-        scale: radius / 25, // Scale icon to be visible (radius 8 = scale 0.32)
-        anchor: [0.5, 0.5],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'fraction',
-        crossOrigin: 'anonymous'
-              }),    
+        const svgPath = `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/TGT.svg`;
+        const cacheKey = `svg:${code}`;
+        if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
+          ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+            image: new olIcon({
+              src: svgPath,
+              scale: 0.08,
+              anchor: [0.5, 1],
+            }),   
           }));
         }
         return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
