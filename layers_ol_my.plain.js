@@ -46,8 +46,6 @@ const ly_sxid_geo_nacrt_style = function (feature) {
   const geomType = feature.getGeometry().getType();
   const zoom = appContext.map.getView().getZoom();
 
-  // Poskusi pridobiti ol.style.Icon iz window
-  const olIcon = window.ol?.style?.Icon;
 
   // --- Za LINE/POLYGON geometrije ---
   if (geomType !== "Point") {
