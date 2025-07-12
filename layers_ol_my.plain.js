@@ -117,7 +117,7 @@
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           image: new olIcon({
-            src: `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`,
+            src: `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`,
             scale: 0.08,
             anchor: [0.5, 1],
             anchorXUnits: 'fraction',
