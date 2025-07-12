@@ -45,9 +45,7 @@
 const ly_sxid_geo_nacrt_style = function (feature) {
   const geomType = feature.getGeometry().getType();
   const zoom = appContext.map.getView().getZoom();
-  const sifra = feature.get('SIFRA');
-
-
+  
   // --- Za LINE/POLYGON geometrije ---
   if (geomType !== "Point") {
     const cacheKey = "stroke:red";
@@ -66,8 +64,29 @@ const ly_sxid_geo_nacrt_style = function (feature) {
   }
 
   // --- Za POINT geometrije ---
+  const codeToSifra = {
+    TGT: "110010", TGTE: "110020", IGT: "110030", IGTE: "110040", PG: "110050",
+    FR: "120010", R: "120020", AGT: "130010", RGT: "130020", MZD: "210040",
+    MZ: "220010", KOZ: "312070", STOP: "313050", CERK: "312090", DIM: "313060",
+    NSSP: "313080", NSSO: "313090", J: "313110", JO: "321010", JP: "321020",
+    JVO: "322010", JVP: "322020", Z: "322030", NH: "322040", PH: "322050",
+    JKO: "323010", JKP: "323020", JEO: "324010", JEP: "324020", DELVN: "324030",
+    ELK: "324040", DELVV: "324060", ELOM: "324150", JTO: "325010", JTP: "325020",
+    DT: "325030", ZP: "326010", JJRO: "328010", JJRP: "328020", S: "328030",
+    PROP: "330060", SEM: "330210", POK: "330220", POG: "330230", PCR: "330240",
+    PP: "330250", OGZ: "351010", OGK: "351020", ZM: "351030", OG: "351040",
+    OPZT: "351050", OPZ: "351060", OPZL: "351070", OPZZ: "351080", VERK: "352010", 
+    OSAMG: "352020", SPOM: "352030", D: "353010",ST: "353020", STOLP: "353030", 
+    MZS: "354090", MZPK: "354100", MZK: "354110", IZV: "410140", PIZV: "410150", 
+    CIS: "410210", VODN: "410220", VODM: "410230", PONOR: "410240", PIPA: "410250",
+    IZL: "410260", SLAP: "410270", ODBV: "410290", OS: "420060", CER: "420070",
+    LD: "431010", ID: "431020", ZNACID: "431030", ZANCLD: "431040", GRM: "431050",
+    OB: "311010", MOST: "330010", ORI: "110040", C: "330120"
+  };
+  
   const st = feature.get("ST") || "";
   const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  // primer: "JK1" → "JK"
+  const sifra = codeToSifra[code] || "000000";
   const colorByCode = {
     C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
     PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
@@ -397,7 +416,7 @@ const ly_sxid_geo_nacrt_style = function (feature) {
         const z = feature.get('Z');
         const oznaka = feature.get('OZNAKA');
         const opomba = feature.get('OPOMBA');
-        const sifra = feature.get('SIFRA');
+        const sifra = codeToSifra[code] || "000000";
         const datum_meritve = feature.get('DATUM_MERITVE');
         
         // Check if this layer is editable
