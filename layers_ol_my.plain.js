@@ -170,7 +170,7 @@ d// FGG LJ Ziga - Custom layers configuration
               name: 'OZNAKA',
               label: 'Oznaka',
               type: 'autocomplete',
-              options: Object.keys(codeToSifra), 
+              options: Object.keys(codeToSifra).filter(key => typeof key === 'string'), 
               allowCustom: true, 
               placeholder: 'Izberite ali vnesite oznako',
               autocomplete: {
