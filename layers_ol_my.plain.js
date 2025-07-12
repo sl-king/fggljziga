@@ -24,8 +24,7 @@
     olGeoJSON,
     olTransformExtent,
     olBbox,
-    olIcon,
-    olStyleIcon = ol.style.Icon;  //Dodal sem to a ne dela .svg, plus dodatno pokvari kodo
+    olIcon
   } = window;
   
   // Get projections and app context from window
@@ -158,34 +157,22 @@
       const color = colorByCode[code] || "gray";
 
       
-      // --- Dinamični scale glede na zoom ---
-      let scale = 0.4;
-      if (zoom >= 22) {
-        scale = 1.2;
-      } else if (zoom >= 21) {
-        scale = 0.6;
-      }
-      
       // --- Prikaz SVG pri višjih zoomih ---
       if (zoom >= 21) {
-        const svgPath = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
+        const svgPath = `file:///C:/Users/coyzi/!MAG/${code}.svg`; 
         const cacheKey = `svg:${code}`;
-        
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
           ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-            image: new olStyleIcon({
+            image: new olIcon({
               src: svgPath,
-              scale: scale,
-              anchor: [0.5, 0.5],
-              anchorXUnits: 'fraction',
-              anchorYUnits: 'fraction',
-              crossOrigin: 'anonymous'
+              scale: 0.08,
+              anchor: [0.5, 1],
             }),
           }));
         }
         return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
       }
-      
+  
       // --- Prikaz barvnega kroga pri nižjih zoomih ---
       const cacheKey = `circle:${code}`;
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
