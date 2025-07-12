@@ -1,4 +1,4 @@
-// FGG LJ Ziga - Custom layers configuration
+d// FGG LJ Ziga - Custom layers configuration
 // Plain JS version for external hosting (GitHub, etc.)
 // No ES6 modules - uses global objects from map4
 
@@ -169,9 +169,10 @@
             {
               name: 'OZNAKA',
               label: 'Oznaka',
-              type: 'text',
-              maxLength: 50,
-              placeholder: 'Vnesite oznako'
+              type: 'autocomplete',
+              options: Object.keys(codeToSifra), 
+              allowCustom: true, 
+              placeholder: 'Izberite ali vnesite oznako'
             },
             {
               name: 'OPOMBA',
