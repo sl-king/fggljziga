@@ -433,7 +433,7 @@ const ly_sxid_geo_nacrt_style = function (feature) {
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
-            ['TOPO_ZNAK_SIFRA', sifra || ''],
+            ['Šifra', sifra || ''],
             ['Datum meritve', datumText === 'N/A' ? '' : datumText]
           ]
         };
