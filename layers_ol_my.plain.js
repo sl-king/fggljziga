@@ -41,185 +41,84 @@
   // sxid_geo_nacrt
   //-------------------------------------------------
   const ly_sxid_geo_nacrt_style_cache = new Map();
-  
-  const ly_sxid_geo_nacrt_style = function (feature) {
-    const geomType = feature.getGeometry().getType();
-    const zoom = appContext.map.getView().getZoom();
-    
-    if (geomType === "Point") {
-      const st = feature.get("ST") || "";
-      const stev = st.match(/\d+/g)?.join('') || ""; 
-      const code = st.match(/[A-Za-z]/g)?.join('') || "X";// poberemo vse crke, ce je posneta tocka poimenovana 
-                                                                //JK1 bo ta postopek najprej loceno nasel J in K ter ju 
-                                                                //ponovno zduzil v JK preko ?.join('')
-  
-      // --- Barva glede na kodo ---
-      const colorByCode = {
-          C: "#A1632E",
-          TGT: "#000099",
-          TGTE: "#FF3399",
-          IGT: "#00CC00",
-          IGTE: "#4d4d4d",
-          PG: "#666666",
-          FR: "#808080",
-          R: "#999999",
-          AGT: "#b3b3b3",
-          RGT: "#cccccc",
-          MZD: "#e6e6e6",
-          STOP: "#262626",
-          CER: "#404040",
-          DIM: "#5c5c5c",
-          NSSP: "#737373",
-          NSSO: "#8c8c8c",
-          OGZ: "#a6a6a6",
-          OGK: "#bfbfbf",
-          ZM: "#d9d9d9",
-          OG: "#f2f2f2",
-          OPZT: "#191919",
-          OPZ: "#2e2e2e",
-          OPZL: "#434343",
-          OPZZ: "#595959",
-          VERK: "#6e6e6e",
-          OSAMG: "#838383",
-          SPOM: "#999999",
-          D: "#aeaeae",
-          ST: "#c3c3c3",
-          STOLP: "#d8d8d8",
-          MZS: "#ededed",
-          MZPK: "#141414",
-          MZK: "#292929",
-          OB: "#3e3e3e",
-          MOST: "#535353",
-          ORI: "505050",
-          SEM: "#b266ff",
-        
-          IZV: "#00ffff",
-          PIZV: "#00e6e6",
-          CIS: "#00cccc",
-          VODN: "#00b3b3",
-          VODM: "#009999",
-          PONOR: "#008080",
-          PIPA: "#006666",
-          IZL: "#004d4d",
-          SLAP: "#003333",
-        
-          ODBV: "#009900",
-          OS: "#00b300",
-          CER: "#00cc00",
-          LD: "#00e600",
-          ID: "#1aff1a",
-          ZNACID: "#33ff33",
-          ZANCLD: "#4dff4d",
-          GRM: "#66ff66",
-          JO: "#80ff80",
-          JP: "#99ff99",
-          JKO: "#b3ffb3",
-          JKP: "#ccffcc",
-        
-          MZ: "#ff00ff",
-        
-          KOZ: "#ffff00",
-          J: "#e6e600",
-          ZP: "#cccc00",
-        
-          JVO: "#0000ff",
-          JVP: "#1a1aff",
-        
-          Z: "#8B4513",
-        
-          NH: "#333333",
-          PH: "#4d4d4d",
-        
-          JEO: "#ff0000",
-          JEP: "#e60000",
-          DELVN: "#cc0000",
-          ELK: "#b30000",
-          DELVV: "#990000",
-          ELOM: "#800000",
-        
-          JTO: "#ff8000",
-          JTP: "#e67300",
-          DT: "#cc6600",
-        
-          JJRO: "#8000ff",
-          JJRP: "#9933ff",
-          S: "#b266ff",
-        
-          PROP: "#808080",
-          POK: "#999999",
-          POG: "#b3b3b3",
-          PCR: "#cccccc",
-          PP: "#e6e6e6",
-  
-          X: "#4A280A"
-      };
-  
-      const color = colorByCode[code] || "gray";
 
-      
-      // --- Prikaz SVG pri višjih zoomih ---
-      if (zoom >= 21) {
-      const svgPath = `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`;
-      const cacheKey = `svg:${code}`;
+const ly_sxid_geo_nacrt_style = function (feature) {
+  const geomType = feature.getGeometry().getType();
+  const zoom = appContext.map.getView().getZoom();
 
-  if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-    try {
+  // --- Za LINE/POLYGON geometrije ---
+  if (geomType !== "Point") {
+    const cacheKey = "stroke:red";
+    if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
+      ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+        stroke: new olStroke({
+          color: "red",
+          width: 9,
+        }),
+        fill: new olFill({
+          color: "rgba(255,0,0,0.1)"
+        }),
+      }));
+    }
+    return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+  }
+
+  // --- Za POINT geometrije ---
+  const st = feature.get("ST") || "";
+  const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  // primer: "JK1" → "JK"
+  const colorByCode = {
+    C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
+    PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
+    MZD: "#e6e6e6", STOP: "#262626", CER: "#404040", DIM: "#5c5c5c", NSSP: "#737373",
+    NSSO: "#8c8c8c", OGZ: "#a6a6a6", OGK: "#bfbfbf", ZM: "#d9d9d9", OG: "#f2f2f2",
+    OPZT: "#191919", OPZ: "#2e2e2e", OPZL: "#434343", OPZZ: "#595959", VERK: "#6e6e6e",
+    OSAMG: "#838383", SPOM: "#999999", D: "#aeaeae", ST: "#c3c3c3", STOLP: "#d8d8d8",
+    MZS: "#ededed", MZPK: "#141414", MZK: "#292929", OB: "#3e3e3e", MOST: "#535353",
+    ORI: "#505050", SEM: "#b266ff", IZV: "#00ffff", PIZV: "#00e6e6", CIS: "#00cccc",
+    VODN: "#00b3b3", VODM: "#009999", PONOR: "#008080", PIPA: "#006666", IZL: "#004d4d",
+    SLAP: "#003333", ODBV: "#009900", OS: "#00b300", CER: "#00cc00", LD: "#00e600",
+    ID: "#1aff1a", ZNACID: "#33ff33", ZANCLD: "#4dff4d", GRM: "#66ff66", JO: "#80ff80",
+    JP: "#99ff99", JKO: "#b3ffb3", JKP: "#ccffcc", MZ: "#ff00ff", KOZ: "#ffff00",
+    J: "#e6e600", ZP: "#cccc00", JVO: "#0000ff", JVP: "#1a1aff", Z: "#8B4513",
+    NH: "#333333", PH: "#4d4d4d", JEO: "#ff0000", JEP: "#e60000", DELVN: "#cc0000",
+    ELK: "#b30000", DELVV: "#990000", ELOM: "#800000", JTO: "#ff8000", JTP: "#e67300",
+    DT: "#cc6600", JJRO: "#8000ff", JJRP: "#9933ff", S: "#b266ff", PROP: "#808080",
+    POK: "#999999", POG: "#b3b3b3", PCR: "#cccccc", PP: "#e6e6e6", X: "#4A280A"
+  };
+
+  const color = colorByCode[code] || "gray";
+
+  // --- SVG stil pri velikem zoomu ---
+  if (zoom >= 21) {
+    const cacheKey = `svg:${code}`;
+    if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
       ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
         image: new ol.style.Icon({
-          src: svgPath,
+          src: `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`,
           scale: 0.08,
           anchor: [0.5, 1],
           anchorXUnits: 'fraction',
           anchorYUnits: 'fraction',
           crossOrigin: 'anonymous'
-        }),
+        })
       }));
-    } catch (e) {
-      console.warn(`Napaka pri ustvarjanju SVG stila za code=${code}`, e);
-      // Fallback na krog
-      ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-        image: new olCircle({
-          radius: 5,
-          fill: new olFill({ color }),
-          stroke: new olStroke({ color: "white", width: 0 }),
-        }),   
-          }));
-        }
-        return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
-      }
-  
-      // --- Prikaz barvnega kroga pri nižjih zoomih ---
-      const cacheKey = `circle:${code}`;
-      if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-        ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-          image: new olCircle({
-            radius: 5,
-            fill: new olFill({ color }),
-            stroke: new olStroke({ color: "white", width: 0 }),
-          }),
-        }));
-      }
-      
-      return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
-      
-    } else {
-      const cacheKey = "stroke:red";
-      
-      if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-        ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-          stroke: new olStroke({
-            color: "red",
-            width: 9,
-          }),
-          fill: new olFill({
-            color: "rgba(255,0,0,0.1)"
-          }),
-        }));
-      }
-      
-      return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
     }
-  };
+    return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+  }
+
+  // --- Barvni krog pri manjšem zoomu ---
+  const cacheKey = `circle:${code}`;
+  if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
+    ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+      image: new olCircle({
+        radius: 5,
+        fill: new olFill({ color }),
+        stroke: new olStroke({ color: "white", width: 1 })
+      })
+    }));
+  }
+  return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+};
   
   const ly_sxid_geo_nacrt = new olVectorLayer({
     id: "lyid_sxid_geo_nacrt",
