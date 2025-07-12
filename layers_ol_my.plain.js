@@ -1,4 +1,4 @@
-d// FGG LJ Ziga - Custom layers configuration
+// FGG LJ Ziga - Custom layers configuration
 // Plain JS version for external hosting (GitHub, etc.)
 // No ES6 modules - uses global objects from map4
 
