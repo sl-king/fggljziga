@@ -45,6 +45,7 @@
 const ly_sxid_geo_nacrt_style = function (feature) {
   const geomType = feature.getGeometry().getType();
   const zoom = appContext.map.getView().getZoom();
+  const sifra = feature.get('SIFRA');
 
 
   // --- Za LINE/POLYGON geometrije ---
@@ -127,7 +128,7 @@ const ly_sxid_geo_nacrt_style = function (feature) {
     source: new olVectorSource({
       url: function (extent) {
         let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
-        let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,Z,OZNAKA,OPOMBA,DATUM_MERITVE&bbox=" + ext2.join(",");
+        let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,Z,OZNAKA,OPOMBA,DATUM_MERITVE,SIFRA&bbox=" + ext2.join(",");
         return u;
       },
       format: new olGeoJSON({
@@ -396,6 +397,7 @@ const ly_sxid_geo_nacrt_style = function (feature) {
         const z = feature.get('Z');
         const oznaka = feature.get('OZNAKA');
         const opomba = feature.get('OPOMBA');
+        const sifra = feature.get('SIFRA');
         const datum_meritve = feature.get('DATUM_MERITVE');
         
         // Check if this layer is editable
@@ -431,6 +433,7 @@ const ly_sxid_geo_nacrt_style = function (feature) {
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
+            ['Šifra', sifra || ''],
             ['Datum meritve', datumText === 'N/A' ? '' : datumText]
           ]
         };
