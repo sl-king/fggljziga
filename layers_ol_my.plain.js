@@ -64,6 +64,8 @@ const ly_sxid_geo_nacrt_style = function (feature) {
   }
 
   // --- Za POINT geometrije ---
+  const st = feature.get("ST") || "";
+  const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  // primer: "JK1" → "JK"
   const codeToSifra = {
     TGT: "110010", TGTE: "110020", IGT: "110030", IGTE: "110040", PG: "110050",
     FR: "120010", R: "120020", AGT: "130010", RGT: "130020", MZD: "210040",
@@ -83,9 +85,6 @@ const ly_sxid_geo_nacrt_style = function (feature) {
     LD: "431010", ID: "431020", ZNACID: "431030", ZANCLD: "431040", GRM: "431050",
     OB: "311010", MOST: "330010", ORI: "110040", C: "330120"
   };
-  
-  const st = feature.get("ST") || "";
-  const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  // primer: "JK1" → "JK"
   const sifra = codeToSifra[code] || "000000";
   const colorByCode = {
     C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
