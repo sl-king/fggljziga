@@ -172,7 +172,11 @@ d// FGG LJ Ziga - Custom layers configuration
               type: 'autocomplete',
               options: Object.keys(codeToSifra), 
               allowCustom: true, 
-              placeholder: 'Izberite ali vnesite oznako'
+              placeholder: 'Izberite ali vnesite oznako',
+              autocomplete: {
+                openOnFocus: true,  // <--- prisili prikaz vseh možnosti ob fokusu
+                filter: 'startsWith' // <--- filtrira med tipkanjem po začetku
+              }
             },
             {
               name: 'OPOMBA',
