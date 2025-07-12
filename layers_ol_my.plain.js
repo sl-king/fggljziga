@@ -87,7 +87,7 @@
   
     // --- Za POINT geometrije ---
     const st = feature.get("ST") || "";
-    const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  // primer: "JK1" → "JK"
+    const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  
     const sifra = codeToSifra[code] || "000000";
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
