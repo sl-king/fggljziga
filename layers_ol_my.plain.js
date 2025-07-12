@@ -166,7 +166,7 @@
         anchorXUnits: 'fraction',
         anchorYUnits: 'fraction',
         crossOrigin: 'anonymous'
-              });     
+              }),    
           }));
         }
         return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
