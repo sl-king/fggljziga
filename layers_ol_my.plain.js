@@ -159,7 +159,7 @@
       
       // --- Prikaz SVG pri višjih zoomih ---
       if (zoom >= 21) {
-        const svgPath = `file:///C:/Users/coyzi/!MAG/${code}.svg`; 
+        const svgPath = `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/TGT.svg`;
         const cacheKey = `svg:${code}`;
         if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
           ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
