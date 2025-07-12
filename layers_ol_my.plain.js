@@ -36,36 +36,9 @@
     console.error('Required dependencies (d96proj, appContext) not found in window');
     return;
   }
-  
   //-------------------------------------------------
-  // sxid_geo_nacrt
+  // Globalna preslikava: code → sifra
   //-------------------------------------------------
-  const ly_sxid_geo_nacrt_style_cache = new Map();
-
-const ly_sxid_geo_nacrt_style = function (feature) {
-  const geomType = feature.getGeometry().getType();
-  const zoom = appContext.map.getView().getZoom();
-  
-  // --- Za LINE/POLYGON geometrije ---
-  if (geomType !== "Point") {
-    const cacheKey = "stroke:red";
-    if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-      ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-        stroke: new olStroke({
-          color: "red",
-          width: 9,
-        }),
-        fill: new olFill({
-          color: "rgba(255,0,0,0.1)"
-        }),
-      }));
-    }
-    return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
-  }
-
-  // --- Za POINT geometrije ---
-  const st = feature.get("ST") || "";
-  const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  // primer: "JK1" → "JK"
   const codeToSifra = {
     TGT: "110010", TGTE: "110020", IGT: "110030", IGTE: "110040", PG: "110050",
     FR: "120010", R: "120020", AGT: "130010", RGT: "130020", MZD: "210040",
@@ -78,120 +51,150 @@ const ly_sxid_geo_nacrt_style = function (feature) {
     PROP: "330060", SEM: "330210", POK: "330220", POG: "330230", PCR: "330240",
     PP: "330250", OGZ: "351010", OGK: "351020", ZM: "351030", OG: "351040",
     OPZT: "351050", OPZ: "351060", OPZL: "351070", OPZZ: "351080", VERK: "352010", 
-    OSAMG: "352020", SPOM: "352030", D: "353010",ST: "353020", STOLP: "353030", 
+    OSAMG: "352020", SPOM: "352030", D: "353010", ST: "353020", STOLP: "353030", 
     MZS: "354090", MZPK: "354100", MZK: "354110", IZV: "410140", PIZV: "410150", 
     CIS: "410210", VODN: "410220", VODM: "410230", PONOR: "410240", PIPA: "410250",
     IZL: "410260", SLAP: "410270", ODBV: "410290", OS: "420060", CER: "420070",
     LD: "431010", ID: "431020", ZNACID: "431030", ZANCLD: "431040", GRM: "431050",
     OB: "311010", MOST: "330010", ORI: "110040", C: "330120"
   };
-  const sifra = codeToSifra[code] || "000000";
-  const colorByCode = {
-    C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
-    PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
-    MZD: "#e6e6e6", STOP: "#262626", CERK: "#404040", DIM: "#5c5c5c", NSSP: "#737373",
-    NSSO: "#8c8c8c", OGZ: "#a6a6a6", OGK: "#bfbfbf", ZM: "#d9d9d9", OG: "#f2f2f2",
-    OPZT: "#191919", OPZ: "#2e2e2e", OPZL: "#434343", OPZZ: "#595959", VERK: "#6e6e6e",
-    OSAMG: "#838383", SPOM: "#999999", D: "#aeaeae", ST: "#c3c3c3", STOLP: "#d8d8d8",
-    MZS: "#ededed", MZPK: "#141414", MZK: "#292929", OB: "#3e3e3e", MOST: "#535353",
-    ORI: "#505050", SEM: "#b266ff", IZV: "#00ffff", PIZV: "#00e6e6", CIS: "#00cccc",
-    VODN: "#00b3b3", VODM: "#009999", PONOR: "#008080", PIPA: "#006666", IZL: "#004d4d",
-    SLAP: "#003333", ODBV: "#009900", OS: "#00b300", CER: "#00cc00", LD: "#00e600",
-    ID: "#1aff1a", ZNACID: "#33ff33", ZANCLD: "#4dff4d", GRM: "#66ff66", JO: "#80ff80",
-    JP: "#99ff99", JKO: "#b3ffb3", JKP: "#ccffcc", MZ: "#ff00ff", KOZ: "#ffff00",
-    J: "#e6e600", ZP: "#cccc00", JVO: "#0000ff", JVP: "#1a1aff", Z: "#8B4513",
-    NH: "#333333", PH: "#4d4d4d", JEO: "#ff0000", JEP: "#e60000", DELVN: "#cc0000",
-    ELK: "#b30000", DELVV: "#990000", ELOM: "#800000", JTO: "#ff8000", JTP: "#e67300",
-    DT: "#cc6600", JJRO: "#8000ff", JJRP: "#9933ff", S: "#b266ff", PROP: "#808080",
-    POK: "#999999", POG: "#b3b3b3", PCR: "#cccccc", PP: "#e6e6e6", X: "#4A280A"
-  };
+  
+  //-------------------------------------------------
+  // sxid_geo_nacrt
+  //-------------------------------------------------
+  const ly_sxid_geo_nacrt_style_cache = new Map();
 
-  const color = colorByCode[code] || "gray";
-
-  // --- SVG stil pri velikem zoomu ---
-  if (zoom >= 21) {
-    const cacheKey = `svg:${code}`;
+  const ly_sxid_geo_nacrt_style = function (feature) {
+    const geomType = feature.getGeometry().getType();
+    const zoom = appContext.map.getView().getZoom();
+  
+    // --- Za LINE/POLYGON geometrije ---
+    if (geomType !== "Point") {
+      const cacheKey = "stroke:red";
+      if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
+        ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+          stroke: new olStroke({
+            color: "red",
+            width: 9,
+          }),
+          fill: new olFill({
+            color: "rgba(255,0,0,0.1)"
+          }),
+        }));
+      }
+      return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+    }
+  
+    // --- Za POINT geometrije ---
+    const st = feature.get("ST") || "";
+    const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  // primer: "JK1" → "JK"
+    const sifra = codeToSifra[code] || "000000";
+    const colorByCode = {
+      C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
+      PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
+      MZD: "#e6e6e6", STOP: "#262626", CERK: "#404040", DIM: "#5c5c5c", NSSP: "#737373",
+      NSSO: "#8c8c8c", OGZ: "#a6a6a6", OGK: "#bfbfbf", ZM: "#d9d9d9", OG: "#f2f2f2",
+      OPZT: "#191919", OPZ: "#2e2e2e", OPZL: "#434343", OPZZ: "#595959", VERK: "#6e6e6e",
+      OSAMG: "#838383", SPOM: "#999999", D: "#aeaeae", ST: "#c3c3c3", STOLP: "#d8d8d8",
+      MZS: "#ededed", MZPK: "#141414", MZK: "#292929", OB: "#3e3e3e", MOST: "#535353",
+      ORI: "#505050", SEM: "#b266ff", IZV: "#00ffff", PIZV: "#00e6e6", CIS: "#00cccc",
+      VODN: "#00b3b3", VODM: "#009999", PONOR: "#008080", PIPA: "#006666", IZL: "#004d4d",
+      SLAP: "#003333", ODBV: "#009900", OS: "#00b300", CER: "#00cc00", LD: "#00e600",
+      ID: "#1aff1a", ZNACID: "#33ff33", ZANCLD: "#4dff4d", GRM: "#66ff66", JO: "#80ff80",
+      JP: "#99ff99", JKO: "#b3ffb3", JKP: "#ccffcc", MZ: "#ff00ff", KOZ: "#ffff00",
+      J: "#e6e600", ZP: "#cccc00", JVO: "#0000ff", JVP: "#1a1aff", Z: "#8B4513",
+      NH: "#333333", PH: "#4d4d4d", JEO: "#ff0000", JEP: "#e60000", DELVN: "#cc0000",
+      ELK: "#b30000", DELVV: "#990000", ELOM: "#800000", JTO: "#ff8000", JTP: "#e67300",
+      DT: "#cc6600", JJRO: "#8000ff", JJRP: "#9933ff", S: "#b266ff", PROP: "#808080",
+      POK: "#999999", POG: "#b3b3b3", PCR: "#cccccc", PP: "#e6e6e6", X: "#4A280A"
+    };
+  
+    const color = colorByCode[code] || "gray";
+  
+    // --- SVG stil pri velikem zoomu ---
+    if (zoom >= 21) {
+      const cacheKey = `svg:${code}`;
+      if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
+        ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
+          image: new olIcon({
+            src: `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`,
+            scale: 0.08,
+            anchor: [0.5, 1],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'fraction',
+            crossOrigin: 'anonymous'
+          })
+        }));
+      }
+      return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+    }
+  
+    // --- Barvni krog pri manjšem zoomu ---
+    const cacheKey = `circle:${code}`;
     if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
       ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-        image: new olIcon({
-          src: `https://raw.githubusercontent.com/sl-king/fggljziga/refs/heads/main/svg/${code}.svg?v=${Date.now()}`,
-          scale: 0.08,
-          anchor: [0.5, 1],
-          anchorXUnits: 'fraction',
-          anchorYUnits: 'fraction',
-          crossOrigin: 'anonymous'
+        image: new olCircle({
+          radius: 5,
+          fill: new olFill({ color }),
+          stroke: new olStroke({ color: "white", width: 1 })
         })
       }));
     }
     return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
-  }
-
-  // --- Barvni krog pri manjšem zoomu ---
-  const cacheKey = `circle:${code}`;
-  if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-    ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-      image: new olCircle({
-        radius: 5,
-        fill: new olFill({ color }),
-        stroke: new olStroke({ color: "white", width: 1 })
-      })
-    }));
-  }
-  return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
-};
-  
-  const ly_sxid_geo_nacrt = new olVectorLayer({
-    id: "lyid_sxid_geo_nacrt",
-    name: "GEO Nacrt",
-    source: new olVectorSource({
-      url: function (extent) {
-        let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
-        let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,Z,OZNAKA,OPOMBA,DATUM_MERITVE,SIFRA&bbox=" + ext2.join(",");
-        return u;
-      },
-      format: new olGeoJSON({
-        dataProjection: d96proj,
-        featureProjection: appContext.mapproj,
-      }),
-      strategy: olBbox,
-    }),
-    maxResolution: 20,
-    style: ly_sxid_geo_nacrt_style,
-    visible: true,
-    // Metadata for MapLibre compatibility
-    metadata: {
-      king_editable: {
-        enabled: true,
-        fields: [
-          {
-            name: 'OZNAKA',
-            label: 'Oznaka',
-            type: 'text',
-            maxLength: 50,
-            placeholder: 'Vnesite oznako'
-          },
-          {
-            name: 'OPOMBA',
-            label: 'Opomba',
-            type: 'text',  // Changed from textarea to text for simpler inline editing
-            maxLength: 200,
-            placeholder: 'Vnesite opombo'
-          }
-        ],
-        // No geometry editing for simplest experience
-        updateEndpoint: '_sx1/sxtables/sxid_geo_nacrt/data',
-        deleteEndpoint: '_sx1/sxtables/sxid_geo_nacrt/data',
-        permissions: {
-          edit: 'all'  // Everyone can edit
+  };
+    
+    const ly_sxid_geo_nacrt = new olVectorLayer({
+      id: "lyid_sxid_geo_nacrt",
+      name: "GEO Nacrt",
+      source: new olVectorSource({
+        url: function (extent) {
+          let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
+          let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,Z,OZNAKA,OPOMBA,DATUM_MERITVE,SIFRA&bbox=" + ext2.join(",");
+          return u;
         },
-        ui: {
-          editMode: 'inline',  // Force inline editing for simplest experience
-          allowDelete: false,  // Don't allow deletion
-          editButtonIcon: '/_root2/assets/three-dots-svgrepo-com.svg'
+        format: new olGeoJSON({
+          dataProjection: d96proj,
+          featureProjection: appContext.mapproj,
+        }),
+        strategy: olBbox,
+      }),
+      maxResolution: 20,
+      style: ly_sxid_geo_nacrt_style,
+      visible: true,
+      // Metadata for MapLibre compatibility
+      metadata: {
+        king_editable: {
+          enabled: true,
+          fields: [
+            {
+              name: 'OZNAKA',
+              label: 'Oznaka',
+              type: 'text',
+              maxLength: 50,
+              placeholder: 'Vnesite oznako'
+            },
+            {
+              name: 'OPOMBA',
+              label: 'Opomba',
+              type: 'text',  // Changed from textarea to text for simpler inline editing
+              maxLength: 200,
+              placeholder: 'Vnesite opombo'
+            }
+          ],
+          // No geometry editing for simplest experience
+          updateEndpoint: '_sx1/sxtables/sxid_geo_nacrt/data',
+          deleteEndpoint: '_sx1/sxtables/sxid_geo_nacrt/data',
+          permissions: {
+            edit: 'all'  // Everyone can edit
+          },
+          ui: {
+            editMode: 'inline',  // Force inline editing for simplest experience
+            allowDelete: false,  // Don't allow deletion
+            editButtonIcon: '/_root2/assets/three-dots-svgrepo-com.svg'
+          }
         }
       }
-    }
-  });
+    });
   
   //-------------------------------------------------
   // cloudfile
