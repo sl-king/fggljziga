@@ -118,7 +118,7 @@
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
           image: new olIcon({
             src: `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`,
-            scale: 0.08,
+            scale: 0.3,
             anchor: [0.5, 1],
             anchorXUnits: 'fraction',
             anchorYUnits: 'fraction',
