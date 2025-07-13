@@ -63,7 +63,28 @@
   // sxid_geo_nacrt
   //-------------------------------------------------
   const ly_sxid_geo_nacrt_style_cache = new Map();
-
+  const svgExistsCache = new Map(); // Cache za preverjanje obstoja SVG-jev
+  
+  // Funkcija za preverjanje, če SVG obstaja
+  function checkSvgExists(url) {
+    if (svgExistsCache.has(url)) {
+      return Promise.resolve(svgExistsCache.get(url));
+    }
+  
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        svgExistsCache.set(url, true);
+        resolve(true);
+      };
+      img.onerror = () => {
+        svgExistsCache.set(url, false);
+        resolve(false);
+      };
+      img.src = url;
+    });
+  }
+  
   const ly_sxid_geo_nacrt_style = function (feature) {
     const geomType = feature.getGeometry().getType();
     const zoom = appContext.map.getView().getZoom();
@@ -73,13 +94,8 @@
       const cacheKey = "stroke:red";
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-          stroke: new olStroke({
-            color: "red",
-            width: 9,
-          }),
-          fill: new olFill({
-            color: "rgba(255,0,0,0.1)"
-          }),
+          stroke: new olStroke({ color: "red", width: 9 }),
+          fill: new olFill({ color: "rgba(255,0,0,0.1)" }),
         }));
       }
       return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
@@ -87,8 +103,9 @@
   
     // --- Za POINT geometrije ---
     const st = feature.get("ST") || "";
-    const code = st.match(/[A-Za-z]+/g)?.join('') || "X";  
+    const code = st.match(/[A-Za-z]+/g)?.join('') || "X";
     const sifra = codeToSifra[code] || "000000";
+  
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
       PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
@@ -110,23 +127,47 @@
     };
   
     const color = colorByCode[code] || "gray";
+    const svgUrl = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
   
-    // --- SVG stil pri velikem zoomu ---
     if (zoom >= 21) {
-      const cacheKey = `svg:${code}`;
-      if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-        ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-          image: new olIcon({
-            src: `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`,
-            scale: 0.3,
-            anchor: [0.5, 0.5],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'fraction',
-            crossOrigin: 'anonymous'
-          })
-        }));
+      const svgCacheKey = `svg:${code}`;
+      const circleCacheKey = `circle:${code}`;
+  
+      // Če je slog že v cache, ga vrni
+      if (ly_sxid_geo_nacrt_style_cache.has(svgCacheKey)) {
+        return ly_sxid_geo_nacrt_style_cache.get(svgCacheKey);
       }
-      return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+  
+      // Poskusi pridobiti SVG asinhrono, sicer uporabi fallback
+      checkSvgExists(svgUrl).then((exists) => {
+        if (exists) {
+          const style = new olStyle({
+            image: new olIcon({
+              src: svgUrl,
+              scale: 0.3,
+              anchor: [0.5, 0.5],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'fraction',
+              crossOrigin: 'anonymous'
+            })
+          });
+          ly_sxid_geo_nacrt_style_cache.set(svgCacheKey, style);
+          feature.setStyle(style);
+        } else {
+          if (!ly_sxid_geo_nacrt_style_cache.has(circleCacheKey)) {
+            ly_sxid_geo_nacrt_style_cache.set(circleCacheKey, new olStyle({
+              image: new olCircle({
+                radius: 5,
+                fill: new olFill({ color }),
+                stroke: new olStroke({ color: "white", width: 1 })
+              })
+            }));
+          }
+          feature.setStyle(ly_sxid_geo_nacrt_style_cache.get(circleCacheKey));
+        }
+      });
+  
+      return null; // Začasno nič, dokler se ne določi stil asinhrono
     }
   
     // --- Barvni krog pri manjšem zoomu ---
@@ -142,6 +183,7 @@
     }
     return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
   };
+
     
     const ly_sxid_geo_nacrt = new olVectorLayer({
       id: "lyid_sxid_geo_nacrt",
