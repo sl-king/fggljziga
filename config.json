@@ -7,7 +7,7 @@
   },
   "layers": {
     "sources": [
-      "layers_ol_my_v2.plain.js"
+      "layers_ol_my_editable.plain.js"
     ],
     "overrides": {
       "ly_cloudfiles": {

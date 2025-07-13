@@ -20,6 +20,7 @@
     olCircle,
     olFill,
     olStroke,
+    olIcon,
     olText,
     olGeoJSON,
     olTransformExtent, 
