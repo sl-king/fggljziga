@@ -112,7 +112,7 @@
     const color = colorByCode[code] || "gray";
   
     // --- SVG stil pri velikem zoomu ---
-    if (zoom >= 19) {
+    if (zoom >= 21) {
       const cacheKey = `svg:${code}`;
       if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
         ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
