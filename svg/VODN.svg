@@ -2,11 +2,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800.000" height="600.000" viewBox="0.0 0.0 800.000 600.000" version="1.1">
   <desc>Produce by Acme CAD Converter</desc>
 <path d="M443.33 251.84L443.33 269.9Z"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M407.21 251.84L443.33 251.84"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M407.21 319.57L407.21 251.84Z"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M373.35 353.43L373.73 358.48 407.21 353.43 407.21 353.43 373.35 353.43Z"
 fill-rule="nonzero" fill="cyan"/>
 <path d="M373.73 358.48L374.86 363.41 407.21 353.43 407.21 353.43 373.73 358.48Z"
