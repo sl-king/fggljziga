@@ -119,7 +119,7 @@
           image: new olIcon({
             src: `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`,
             scale: 0.3,
-            anchor: [0.5, 1],
+            anchor: [0.5, 0.5],
             anchorXUnits: 'fraction',
             anchorYUnits: 'fraction',
             crossOrigin: 'anonymous'
