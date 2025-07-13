@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800.000" height="600.000" viewBox="0.0 0.0 800.000 600.000" version="1.1">
+  <desc>Produce by Acme CAD Converter</desc>
+<path d="M397.72 384.18L397.72 217.01 357.7 216.58 397.72 384.18Z"
+fill="black" stroke="black" stroke-width="0.2"/>
+<path d="M397.72 384.18L441.28 217.47 397.72 217.01 397.72 384.18Z"
+fill="black" stroke="black" stroke-width="0.2"/>
+<path d="M357.7 216.58L397.72 384.18"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M397.72 384.18L441.28 217.47"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M441.28 217.47L357.7 216.58"
+fill="none" stroke="black" stroke-width="0.5"/>
+</svg>

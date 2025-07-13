@@ -2,13 +2,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800.000" height="600.000" viewBox="0.0 0.0 800.000 600.000" version="1.1">
   <desc>Produce by Acme CAD Converter</desc>
 <path d="M281.93 348.68L418.3 348.68"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M418.3 348.68L418.3 212.32Z"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M418.3 212.32L281.93 212.32"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M281.93 212.32L281.93 348.68Z"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M339.9 281.13L339.9 279.87 339.88 280.5 339.9 281.13Z"
 fill="black" stroke="black" stroke-width="0.2"/>
 <path d="M339.9 281.13L339.96 281.76 339.9 279.87 339.9 281.13Z"
@@ -210,73 +210,73 @@ fill="black" stroke="black" stroke-width="0.2"/>
 <path d="M360.32 281.13L360.34 280.5 360.32 279.87 360.32 281.13Z"
 fill="black" stroke="black" stroke-width="0.2"/>
 <path d="M360.34 280.5L360.14 282.49"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M360.14 282.49L359.56 284.41"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M359.56 284.41L358.62 286.18"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M358.62 286.18L357.34 287.73"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M357.34 287.73L355.79 289"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M355.79 289L354.03 289.95"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M354.03 289.95L352.11 290.53"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M352.11 290.53L350.11 290.73"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M350.11 290.73L348.12 290.53"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M348.12 290.53L346.2 289.95"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M346.2 289.95L344.43 289"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M344.43 289L342.88 287.73"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M342.88 287.73L341.61 286.18"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M341.61 286.18L340.66 284.41"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M340.66 284.41L340.08 282.49"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M340.08 282.49L339.88 280.5"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M339.88 280.5L340.08 278.5"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M340.08 278.5L340.66 276.59"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M340.66 276.59L341.61 274.82"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M341.61 274.82L342.88 273.27"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M342.88 273.27L344.43 272"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M344.43 272L346.2 271.05"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M346.2 271.05L348.12 270.47"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M348.12 270.47L350.11 270.27"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M350.11 270.27L352.11 270.47"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M352.11 270.47L354.03 271.05"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M354.03 271.05L355.79 272"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M355.79 272L357.34 273.27"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M357.34 273.27L358.62 274.82"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M358.62 274.82L359.56 276.59"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M359.56 276.59L360.14 278.5"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M360.14 278.5L360.34 280.5"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M281.93 246.41L418.3 246.41"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M281.93 314.59L418.3 314.59"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M418.3 246.41L418.3 212.32Z"
-fill="none" stroke="black" stroke-width="0.5"/>
+fill="none" stroke="black" stroke-width="3.5"/>
 </svg>
