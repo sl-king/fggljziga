@@ -15,4 +15,7 @@ fill="none" stroke="black" stroke-width="3.5"/>
 fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M460.73 297.05L460.73 297.05Z"
 fill="none" stroke="black" stroke-width="3.5"/>
+<circle cx="324.41" cy="297.05" r="3.5" fill="black" />
+<circle cx="392.57" cy="297.05" r="3.5" fill="black" />
+<circle cx="460.73" cy="297.05" r="3.5" fill="black" />
 </svg>
