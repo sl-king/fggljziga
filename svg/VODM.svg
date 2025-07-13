@@ -78,15 +78,15 @@ fill-rule="nonzero" fill="cyan"/>
 <path d="M350.68 333.8L350.29 338.58 379.32 338.58 379.32 338.58 350.68 333.8Z"
 fill-rule="nonzero" fill="cyan"/>
 <path d="M379.32 309.55L379.32 251.49Z"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M359.96 251.49L359.96 251.49Z"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M398.67 251.49L398.67 251.49Z"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M 379.32 251.49 A 19.353 19.353 0 0 0 340.61 251.49"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M 418.02 251.49 A 19.353 19.353 0 0 0 379.32 251.49"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M358.03 251.49L358.4 252.63 359.96 251.49 359.96 251.49 358.03 251.49Z"
 fill-rule="nonzero" fill="cyan"/>
 <path d="M358.4 252.63L359.37 253.33 359.96 251.49 359.96 251.49 358.4 252.63Z"
