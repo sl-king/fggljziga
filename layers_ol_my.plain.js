@@ -58,6 +58,24 @@
     LD: "431010", ID: "431020", ZNACID: "431030", ZANCLD: "431040", GRM: "431050",
     OB: "311010", MOST: "330010", ORI: "110040", C: "330120"
   };
+
+  function oznakaToSifra(oznaka) {
+  if (!oznaka) return "000000";
+
+  // Vnosi kot npr. "TGT", "TGT (telekom stolp)", "telekom stolp", "Stolp TGT" ...
+  const clean = oznaka.toUpperCase().replace(/[^A-Z0-9]/g, " ").trim();
+
+  // Poskusi direktno zadeti šifro
+  if (codeToSifra[clean]) return codeToSifra[clean];
+
+  // Poskusi najti ujemanje glede na delne zadetke
+  const keys = Object.keys(codeToSifra);
+  for (let key of keys) {
+    if (clean.includes(key)) return codeToSifra[key];
+  }
+
+  return "000000"; // Fallback šifra
+}
   
   //-------------------------------------------------
   // sxid_geo_nacrt
@@ -611,6 +629,9 @@
         const z = feature.get('Z');
         const oznaka = feature.get('OZNAKA');
         const opomba = feature.get('OPOMBA');
+        const topografskaSifra = oznakaToSifra(oznaka);
+        // Vstavi šifro v popup HTML (prilagodi glede na tvojo strukturo)
+        popupElement.querySelector(".popup-sifra").textContent = topografskaSifra;
         const sifra = codeToSifra[code] || "000000";
         const datum_meritve = feature.get('DATUM_MERITVE');
         
@@ -647,6 +668,7 @@
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
+            ['Topo. šifra', oznaka || ''],
             ['Šifra', sifra || ''],
             ['Datum meritve', datumText === 'N/A' ? '' : datumText]
           ]
