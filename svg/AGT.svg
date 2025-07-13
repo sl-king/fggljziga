@@ -243,4 +243,5 @@ fill="none" stroke="black" stroke-width="3.5"/>
 fill="none" stroke="black" stroke-width="3.5"/>
 <path d="M548.15 278.09L548.34 285.35"
 fill="none" stroke="black" stroke-width="3.5"/>
+<circle cx="414.25" cy="285.35" r="5" fill="black" />
 </svg>
