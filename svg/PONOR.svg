@@ -100,9 +100,9 @@ fill-rule="nonzero" fill="cyan"/>
 <path d="M435.73 173.53L442.67 173.31 442.67 198.8 437.36 198.97 435.73 173.53Z"
 fill-rule="nonzero" fill="cyan"/>
 <path d="M442.67 281.66L474.54 265.73"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M442.67 281.66L474.54 297.59"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M538.28 281.66L442.67 281.66"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 </svg>
