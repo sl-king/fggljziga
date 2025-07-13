@@ -237,11 +237,11 @@
         }
       }
     });
-    appContext.map.getView().on('change:resolution', () => {
-      ly_sxid_geo_nacrt.getSource().getFeatures().forEach(f => {
-        f.changed(); // Sproži ponovno stilizacijo
+      appContext.map.getView().on('change:resolution', () => {
+        ly_sxid_geo_nacrt.getSource().getFeatures().forEach(f => {
+          f.changed(); // Sproži ponovno stilizacijo
+        });
       });
-    });
   //-------------------------------------------------
   // cloudfile
   //-------------------------------------------------
