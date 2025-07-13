@@ -2,9 +2,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800.000" height="600.000" viewBox="0.0 0.0 800.000 600.000" version="1.1">
   <desc>Produce by Acme CAD Converter</desc>
 <path d="M536.96 281.87L536.96 351.8Z"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M340.97 281.87L536.96 281.87"
-fill="none" stroke="cyan" stroke-width="0.5"/>
+fill="none" stroke="cyan" stroke-width="3.5"/>
 <path d="M275.42 281.87L275.8 288.96 340.97 281.87 340.97 281.87 275.42 281.87Z"
 fill-rule="nonzero" fill="cyan"/>
 <path d="M275.8 288.96L276.95 295.97 340.97 281.87 340.97 281.87 275.8 288.96Z"
