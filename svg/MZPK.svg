@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800.000" height="600.000" viewBox="0.0 0.0 800.000 600.000" version="1.1">
+  <desc>Produce by Acme CAD Converter</desc>
+<path d="M270.87 355.99L406.33 220.53"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M270.87 220.53L406.33 355.99"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M270.87 220.53L406.33 220.53"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M270.87 355.99L270.87 220.53Z"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M406.33 355.99L270.87 355.99"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M406.33 220.53L406.33 355.99Z"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M451.48 254.39L451.48 322.12Z"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M451.48 254.39L480.51 254.39"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M480.51 254.39L490.18 257.62"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M490.18 257.62L493.41 260.84"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M493.41 260.84L496.64 267.29"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M496.64 267.29L496.64 276.97Z"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M496.64 276.97L493.41 283.42"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M493.41 283.42L490.18 286.64"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M490.18 286.64L480.51 289.87"
+fill="none" stroke="black" stroke-width="0.5"/>
+<path d="M480.51 289.87L451.48 289.87"
+fill="none" stroke="black" stroke-width="0.5"/>
+</svg>
