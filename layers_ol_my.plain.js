@@ -24,8 +24,7 @@
     olText,
     olGeoJSON,
     olTransformExtent,
-    olBbox,
-    olIcon
+    olBbox
   } = window;
   
   // Get projections and app context from window
@@ -240,6 +239,141 @@
     });
   
   //-------------------------------------------------
+  // sxid_geo_notes - WITH POPUP EDITING AND GEOMETRY
+  //-------------------------------------------------
+  const ly_sxid_geo_notes_style_cache = new Map();
+  
+  const ly_sxid_geo_notes_style = function (feature) {
+    const geomType = feature.getGeometry().getType();
+    
+    if (geomType === "Point") {
+      const cacheKey = "point:orange";
+      
+      if (!ly_sxid_geo_notes_style_cache.has(cacheKey)) {
+        ly_sxid_geo_notes_style_cache.set(cacheKey, new olStyle({
+          image: new olCircle({
+            radius: 9,
+            fill: new olFill({ color: "#FF8C00" }),
+            stroke: new olStroke({ color: "white", width: 3 }),
+          }),
+        }));
+      }
+      
+      return ly_sxid_geo_notes_style_cache.get(cacheKey);
+      
+    } else {
+      const cacheKey = "stroke:orange";
+      
+      if (!ly_sxid_geo_notes_style_cache.has(cacheKey)) {
+        ly_sxid_geo_notes_style_cache.set(cacheKey, new olStyle({
+          stroke: new olStroke({
+            color: "#FF8C00",
+            width: 9,
+          }),
+          fill: new olFill({
+            color: "rgba(255,140,0,0.1)"
+          }),
+        }));
+      }
+      
+      return ly_sxid_geo_notes_style_cache.get(cacheKey);
+    }
+  };
+  
+  const ly_sxid_geo_notes = new olVectorLayer({
+    id: "lyid_sxid_geo_notes",
+    name: "Geo opombe",
+    source: new olVectorSource({
+      url: function (extent) {
+        let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
+        let u="_sx1/sxtables/sxid_geo_notes/data/.json?select=geometry,gsx_id,ST,Z,OZNAKA,OPOMBA,STATUS,DATUM_MERITVE&bbox=" + ext2.join(",");
+        return u;
+      },
+      format: new olGeoJSON({
+        dataProjection: d96proj,
+        featureProjection: appContext.mapproj,
+      }),
+      strategy: olBbox,
+    }),
+    maxResolution: 20,
+    style: ly_sxid_geo_notes_style,
+    visible: true,
+    // Metadata for MapLibre compatibility - POPUP MODE WITH GEOMETRY
+    metadata: {
+      king_editable: {
+        enabled: true,
+        fields: [
+          {
+            name: 'ST',
+            label: 'ST',
+            type: 'text',
+            maxLength: 20,
+            placeholder: 'Vnesite St.',
+            required: true
+          },
+          {
+            name: 'OZNAKA',
+            label: 'Oznaka',
+            type: 'text',
+            maxLength: 50,
+            placeholder: 'Vnesite oznako',
+            required: true
+          },
+          {
+            name: 'OPOMBA',
+            label: 'Opomba',
+            type: 'textarea',
+            rows: 4,
+            maxLength: 500,
+            placeholder: 'Vnesite podrobnejši opis'
+          },
+          {
+            name: 'STATUS',
+            label: 'Status',
+            type: 'select',
+            options: [
+              { value: 'active', label: 'Aktivno' },
+                { value: 'resolved', label: 'Rešeno' },
+                { value: 'pending', label: 'V teku' }
+              ]
+          }
+        ],
+        // Enable geometry editing
+        geometry: {
+          point: true,     // Allow moving points
+          line: true,      // Allow editing line vertices
+          polygon: true    // Allow editing polygon shapes
+        },
+        // Feature creation configuration
+        creation: {
+          enabled: true,
+          geometryType: 'Point',  // Default to point, user can change in UI
+          createEndpoint: '_sx1/sxtables/sxid_geo_notes/data',
+          defaults: {
+            STATUS: 'active',
+            Z: 0
+          },
+          drawingStyle: {
+            // This will be interpreted by map4 to create OL style
+            stroke: { color: 'blue', width: 2 },
+            fill: { color: 'rgba(0, 0, 255, 0.1)' }
+          }
+        },
+        updateEndpoint: '_sx1/sxtables/sxid_geo_notes/data',
+        deleteEndpoint: '_sx1/sxtables/sxid_geo_notes/data',
+        permissions: {
+          edit: 'all'  // Everyone can edit
+        },
+        ui: {
+          editMode: 'inline+popup',  // Both inline editing AND popup button
+          allowDelete: true,  // Allow deletion
+          editButtonIcon: '/_root2/assets/three-dots-svgrepo-com.svg'
+        }
+      }
+    }
+  });
+  
+  //-------------------------------------------------
   // cloudfile
   //-------------------------------------------------
   const ly_cloudfiles_style_cache = new Map();
@@ -384,6 +518,7 @@
     // Layer objects
     myLayers: {
       lyid_sxid_geo_nacrt: ly_sxid_geo_nacrt,
+      lyid_sxid_geo_notes: ly_sxid_geo_notes,
       lyid_cloudfiles: ly_cloudfiles,
       lyid_mg_parcele: ly_mg_parcele,
       lyid_webserial: ly_webserial
@@ -397,6 +532,15 @@
         label: "GEO Nacrt",
         toggleId: "tgl_geo_nacrt",
         zoomTextId: "geo_nacrt_zoom",
+        icon: "/_root2/assets/box.svg",
+        maxResolution: 20
+      },
+      {
+        type: "layer",
+        layerId: ly_sxid_geo_notes.get("id"),
+        label: "Geo opombe",
+        toggleId: "tgl_geo_notes",
+        zoomTextId: "geo_notes_zoom",
         icon: "/_root2/assets/box.svg",
         maxResolution: 20
       },
@@ -446,6 +590,12 @@
             appContext.photoUploadModule.PhotoUpload_Open();
           }
         }
+      },
+      {
+        type: "create",
+        layerId: "lyid_sxid_geo_notes",
+        label: "Dodaj geo opombo",
+        buttonId: "btn_create_geo_note"
       }
     ],
     
@@ -499,6 +649,66 @@
             ['Opomba', opomba || ''],
             ['Šifra', sifra || ''],
             ['Datum meritve', datumText === 'N/A' ? '' : datumText]
+          ]
+        };
+        
+        // Add editable configuration if enabled
+        if (isEditable) {
+          response.editable = true;
+          response.editConfig = kingEditable;
+          response.featureId = feature.get('GSX_ID');
+        }
+        
+        return response;
+      }
+      
+      if (layerId === 'lyid_sxid_geo_notes') {
+        const gsx_id = feature.get('GSX_ID');
+        const st = feature.get('ST');
+        const z = feature.get('Z');
+        const oznaka = feature.get('OZNAKA');
+        const opomba = feature.get('OPOMBA');
+        const status = feature.get('STATUS');
+        const datum_meritve = feature.get('DATUM_MERITVE');
+        
+        // Check if this layer is editable
+        const metadata = layer.get('metadata');
+        const kingEditable = metadata?.king_editable;
+        const isEditable = kingEditable?.enabled;
+        
+        // Format epoch timestamp to readable date
+        let datumText = '';
+        if (datum_meritve) {
+          try {
+            const date = new Date(datum_meritve * 1000);
+            datumText = date.toLocaleString('sl-SI', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit'
+            });
+          } catch (e) {
+            datumText = datum_meritve;
+          }
+        }
+        
+        // Format status display
+        let statusText = status || '';
+        if (status === 'active') statusText = 'Aktivno';
+        else if (status === 'resolved') statusText = 'Rešeno';
+        else if (status === 'pending') statusText = 'V teku';
+        
+        const response = {
+          table: [
+            ['ID', gsx_id || ''],
+            ['ST', st || ''],
+            ['Z', z || ''],
+            ['Oznaka', oznaka || ''],
+            ['Opomba', opomba || ''],
+            ['Status', statusText],
+            ['Datum', datumText]
           ]
         };
         
@@ -617,6 +827,7 @@
       ly_webserial: ly_webserial,
       ly_mg_parcele: ly_mg_parcele,
       ly_sxid_geo_nacrt: ly_sxid_geo_nacrt,
+      ly_sxid_geo_notes: ly_sxid_geo_notes,
       ly_cloudfiles: ly_cloudfiles,
       serialSource: serialSource
     }
