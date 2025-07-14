@@ -315,7 +315,7 @@
               name: 'OZNAKA',
               label: 'Oznaka',
               type: 'text',
-              maxLength: 50,
+              maxLength: 100,
               placeholder: 'Vnesite oznako',
             },
             {
