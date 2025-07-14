@@ -134,6 +134,7 @@
   
     // --- Za POINT geometrije ---
     const oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
+    const code = oznaka.match(/^[A-Z]+/i)?.[0] || "X";
     let sifra = "";
   
     // 1. Preveri, ali je oznaka že šifra (številka, dolžine 6)
@@ -154,7 +155,6 @@
       }
     }
 
-    const code = oznaka.match(/^[A-Z]+/i)?.[0] || "X";
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
       PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
