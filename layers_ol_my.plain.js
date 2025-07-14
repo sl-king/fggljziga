@@ -58,7 +58,38 @@
     LD: "431010", ID: "431020", ZNACID: "431030", ZANCLD: "431040", GRM: "431050",
     OB: "311010", MOST: "330010", ORI: "110040", C: "330120"
   };
- 
+
+  const imeToSifra = {
+    "temeljna geodetska tocka": "110010", "temeljna geodetska tocka z dolocenimi ETRS koordinatami": "110020",
+    "izmeritvena geodetska tocka": "110030", "izmeritvena geodetska tocka z dolocenimi ETRS koordinatami": "110040",
+    "permanentna GNSS postaja": "110050", "fundamentalni reper": "120010", "reper": "120020",
+    "absolutna gravimetricna tocka": "130010", "relativna gravimetricna tocka": "130020",
+    "mejno znamenjene na drzavni meji": "210040", "mejno znamenje": "220010", "kozolec": "312070",
+    "stopnice": "313050", "cerkev": "312090", "dimnik": "313060", "nosilni steber stavbe s pravokotnim prerezom": "313080",
+    "nosilni steber stavbe s okroglim prerezom": "313090", "jasek za svetl., kurjavo, tov. dvigalo, zracnik": "313110",
+    "jasek komunalnih vodov okrogel": "321010", "jasek komunalnih vodov pravokoten": "321020",
+    "vodovodni jasek okrogel": "322010", "vodovodni jasek pravokoten": "322020", "zapirac": "322030", 
+    "nadzemni hidrant": "322040", "podzemni hidrant": "322050", "kanalski jasek okrogel": "323010",
+    "kanalski jasek pravokoten": "323020", "elektricni jasek okrogel": "324010", "elektricni jasek pravokoten": "324020",
+    "drog za elektricni vod nizke napetosti": "324030", "elektricna konzola": "324040", 
+    "drog za elektricni vod visoke napetosti": "324060", "elektricna omarica": "324150",
+    "telefonski jasek okrogel": "325010", "telefonski jasek pravokoten": "325020", "telefonski drog": "325030",
+    "plinski zapirac": "326010", "jasek javne razsvetljave okrogel": "328010", 
+    "jasek javne razsvetljave pravokoten": "328020", "svetilka na drogu": "328030", "propust": "330060",
+    "semafor": "330210", "poziralnik okrogel": "330220", "poziralnik oglat": "330230", 
+    "poziralnik cestni pod robnikom": "330240", "peskolov jasek poziralnika": "330250", "zidana ograja": "351010",
+    "ograja iz zlozenega kamenja": "351020", "ziva meja": "351030", "ograja": "351040",
+    "oporni in podporni zid s trikotnikom na koncu": "351050", "oporni in podporni zid brez trikotnikov na koncu": "351060",
+    "oporni zid trikotnik na koncu linije": "351070", "oporni zid s trikotnikom na zacetku": "351080",
+    "versko znamenje kapelica": "352010", "osamljen grob": "352020", "spomenik": "352030", "drog": "353010",
+    "steber": "353020", "stolp": "353030", "manjsa zgradba, straznica": "354090", "manjsa zgradba, prometna kabina": "354100",
+    "manjsa zgradba, kiosk": "354110", "izvir": "410140", "presihajoc izvir": "410150", "cisterna z vodo kapnica": "410210",
+    "vodnjak": "410220", "vodomet, okrasni vodnjak": "410230", "ponor": "410240", "javni iztok vode, pipa/vodnjak": "410250",
+    "izliv zajezene vode": "410260", "slap": "410270", "odbijac vode": "410290", "osamljena skala": "420060",
+    "cer": "420070", "listnato drevo": "431010", "iglasto drevo": "431020", "znacilno iglasto drevo": "431030",
+    "znacilno listnato drevo": "431040", "grm": "431050", "objekt": "311010", "most": "330010", "orientacija": "110040",
+    "cesta": "330120"
+  }
   //-------------------------------------------------
   // sxid_geo_nacrt
   //-------------------------------------------------
@@ -102,9 +133,26 @@
     }
   
     // --- Za POINT geometrije ---
-    const st = feature.get("ST") || "";
-    const code = st.match(/[A-Za-z]+/g)?.join('') || "X";
-    const sifra = codeToSifra[code] || "000000";
+    const oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
+    let sifra = "";
+  
+    // 1. Preveri, ali je oznaka že šifra (številka, dolžine 6)
+    if (/^\d{6}$/.test(oznaka)) {
+      sifra = oznaka;
+    } else {
+      // 2. Preveri, ali je oznaka code (npr. TGT iz TGT1)
+      const code = oznaka.match(/^[A-Z]+/i)?.[0];
+      if (codeToSifra.hasOwnProperty(code)) {
+        sifra = codeToSifra[code];
+      } else {
+        // 3. Preveri, ali je oznaka ime šifre (pretvori v lowercase)
+        const ime = oznaka.toLowerCase();
+        const imeToSifra = Object.fromEntries(
+          Object.entries(codeToSifra).map(([k, v]) => [k.toLowerCase(), v])
+        );
+        sifra = imeToSifra[ime] || "";
+      }
+    }
   
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
@@ -125,7 +173,8 @@
       DT: "#cc6600", JJRO: "#8000ff", JJRP: "#9933ff", S: "#b266ff", PROP: "#808080",
       POK: "#999999", POG: "#b3b3b3", PCR: "#cccccc", PP: "#e6e6e6", X: "#4A280A"
     };
-  
+
+    const code = oznaka.match(/^[A-Z]+/i)?.[0] || "X";
     const color = colorByCode[code] || "gray";
     const svgUrl = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
   
