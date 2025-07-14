@@ -655,13 +655,29 @@
       if (layerId === 'lyid_sxid_geo_nacrt') {
         const gsx_id = feature.get('GSX_ID');
         const st = feature.get('ST');
-          const stev = st.match(/\d+/g)?.join('') || '';
-          const code = st.match(/[A-Za-z]/g)?.join('') || 'X';
+        const stev = st.match(/\d+/g)?.join('') || '';
         const z = feature.get('Z');
-        const oznaka = feature.get('OZNAKA');
+        const oznaka = feature.get('OZNAKA')|| st || '';
         const opomba = feature.get('OPOMBA');
         const sifra = codeToSifra[code] || "000000";
         const datum_meritve = feature.get('DATUM_MERITVE');
+
+        // 💡 Popravljena logika za določanje šifre
+        let sifra = "";
+        if (/^\d{6}$/.test(oznaka)) {
+          sifra = oznaka;
+        } else {
+          const code = oznaka.match(/^[A-Z]+/i)?.[0];
+          if (codeToSifra.hasOwnProperty(code)) {
+            sifra = codeToSifra[code];
+          } else {
+            const ime = oznaka.toLowerCase();
+            const imeToSifra = Object.fromEntries(
+              Object.entries(codeToSifra).map(([k, v]) => [k.toLowerCase(), v])
+            );
+            sifra = imeToSifra[ime] || "";
+          }
+        }
         
         // Check if this layer is editable
         const metadata = layer.get('metadata');
@@ -692,7 +708,7 @@
           table: [
             ['ID', gsx_id || ''],
             ['Številka', stev || ''],
-            ['Koda', code || ''],
+            ['Koda',  oznaka.match(/^[A-Za-z]+/)?.[0] || ''],
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
