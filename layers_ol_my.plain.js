@@ -284,7 +284,9 @@
             })
           }));
         }
-        return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
+        const style = ly_sxid_geo_nacrt_style_cache.get(circleCacheKey);
+        feature.setStyle(style); // ← pomembno: vedno posodobi slog glede na zoom
+        return style;
       };
 
     
