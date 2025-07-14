@@ -168,6 +168,47 @@
     // --- Za POINT geometrije ---
     const oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
     const code = oznakaToCode(oznaka);
+
+    // Funkcija za pridobitev šifre iz oznake
+    function oznakaToSifra(oznaka) {
+      let sifra = "";
+    
+      if (/^\d{6}$/.test(oznaka)) {
+        sifra = oznaka;
+      } else {
+        const code = oznaka.match(/^[A-Z]+/i)?.[0];
+        if (code && codeToSifra.hasOwnProperty(code)) {
+          sifra = codeToSifra[code];
+        } else {
+          const ime = oznaka.toLowerCase();
+          if (imeToSifra.hasOwnProperty(ime)) {
+            sifra = imeToSifra[ime];
+          }
+        }
+      }
+    
+      return sifra;
+    }
+
+    // Funkcija za pridobitev kode (npr. "TGT") iz oznake
+    function oznakaToCode(oznaka) {
+      if (!oznaka) return "X";
+    
+      if (/^\d{6}$/.test(oznaka)) {
+        // Če je oznaka šifra (npr. 110010), pridobi kodo iz sifraToCode
+        return sifraToCode[oznaka] || "X";
+      }
+    
+      const code = oznaka.match(/^[A-Z]+/i)?.[0];
+      if (code && codeToSifra.hasOwnProperty(code)) {
+        return code;
+      }
+    
+      const ime = oznaka.toLowerCase();
+      const sifra = imeToSifra[ime];
+      return sifra ? sifraToCode[sifra] || "X" : "X";
+    }
+    
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
       PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
