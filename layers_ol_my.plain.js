@@ -231,11 +231,12 @@
 
     const color = colorByCode[code] || "gray";
     const svgUrl = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
-  
-    if (zoom >= 21) {
-          const svgCacheKey = `svg:${code}`;
-          const circleCacheKey = `circle:${code}`;
-      
+
+    const getFeatureStyle = (feature, zoom, code, color, svgUrl) => {
+      const svgCacheKey = `svg:${code}`;
+      const circleCacheKey = `circle:${code}`;
+
+      if (zoom >= 21) {
           // Če je slog že v cache, ga vrni
           if (ly_sxid_geo_nacrt_style_cache.has(svgCacheKey)) {
             return ly_sxid_geo_nacrt_style_cache.get(svgCacheKey);
