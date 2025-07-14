@@ -660,28 +660,26 @@
       if (layerId === 'lyid_sxid_geo_nacrt') {
         const gsx_id = feature.get('GSX_ID');
         const st = feature.get('ST');
-          const stev = st.match(/\d+/g)?.join('') || '';
-          const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
+        const stev = st.match(/\d+/g)?.join('') || '';
+        const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
         const opomba = feature.get('OPOMBA');
-        const sifra = codeToSifra[code] || "000000";
         const datum_meritve = feature.get('DATUM_MERITVE');
 
-        // Popravljena logika za določanje šifre
+       // Uporabi tvojo končno logiko za pretvorbo oznake v šifro
         let sifra = "";
         if (/^\d{6}$/.test(oznaka)) {
           sifra = oznaka;
         } else {
-          const code = oznaka.match(/^[A-Z]+/i)?.[0];
-          if (codeToSifra.hasOwnProperty(code)) {
-            sifra = codeToSifra[code];
+          const codeFromOznaka = oznaka.match(/^[A-Z]+/i)?.[0];
+          if (codeFromOznaka && codeToSifra.hasOwnProperty(codeFromOznaka)) {
+            sifra = codeToSifra[codeFromOznaka];
           } else {
             const ime = oznaka.toLowerCase();
-            const imeToSifra = Object.fromEntries(
-              Object.entries(codeToSifra).map(([k, v]) => [k.toLowerCase(), v])
-            );
-            sifra = imeToSifra[ime] || "";
+            if (imeToSifra.hasOwnProperty(ime)) {
+              sifra = imeToSifra[ime];
+            }
           }
         }
         
