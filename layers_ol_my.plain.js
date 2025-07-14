@@ -66,8 +66,8 @@
   );
 
   const imeToSifra = {
-    "temeljna geodetska tocka": "110010", "temeljna geodetska tocka z dolocenimi ETRS koordinatami": "110020",
-    "izmeritvena geodetska tocka": "110030", "izmeritvena geodetska tocka z dolocenimi ETRS koordinatami": "110040",
+    "temeljna geodetska tocka": "110010", "temeljna geodetska tocka z dolocenimi etrs koordinatami": "110020",
+    "izmeritvena geodetska tocka": "110030", "izmeritvena geodetska tocka z dolocenimi etrs koordinatami": "110040",
     "permanentna GNSS postaja": "110050", "fundamentalni reper": "120010", "reper": "120020",
     "absolutna gravimetricna tocka": "130010", "relativna gravimetricna tocka": "130020",
     "mejno znamenjene na drzavni meji": "210040", "mejno znamenje": "220010", "kozolec": "312070",
