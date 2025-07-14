@@ -36,6 +36,7 @@
     console.error('Required dependencies (d96proj, appContext) not found in window');
     return;
   }
+  
   //-------------------------------------------------
   // Globalna preslikava: code → sifra
   //-------------------------------------------------
