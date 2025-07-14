@@ -135,24 +135,29 @@
     // --- Za POINT geometrije ---
     const oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
     const code = oznaka.match(/^[A-Z]+/i)?.[0] || "X";
-    let sifra = "";
   
     // 1. Preveri, ali je oznaka že šifra (številka, dolžine 6)
-    if (/^\d{6}$/.test(oznaka)) {
-      sifra = oznaka;
-    } else {
-      // 2. Preveri, ali je oznaka code (npr. TGT iz TGT1)
-      const code = oznaka.match(/^[A-Z]+/i)?.[0];
-      if (codeToSifra.hasOwnProperty(code)) {
-        sifra = codeToSifra[code];
+    function oznakaToSifra(oznaka) {
+      let sifra = "";
+    
+      // 1. Preveri, ali je oznaka že šifra (šestmestna številka)
+      if (/^\d{6}$/.test(oznaka)) {
+        sifra = oznaka;
       } else {
-        // 3. Preveri, ali je oznaka ime šifre (pretvori v lowercase)
-        const ime = oznaka.toLowerCase();
-        const imeToSifra = Object.fromEntries(
-          Object.entries(codeToSifra).map(([k, v]) => [k.toLowerCase(), v])
-        );
-        sifra = imeToSifra[ime] || "";
+        // 2. Preveri, ali je oznaka koda (npr. "TGT" iz "TGT1")
+        const code = oznaka.match(/^[A-Z]+/i)?.[0];
+        if (code && codeToSifra.hasOwnProperty(code)) {
+          sifra = codeToSifra[code];
+        } else {
+          // 3. Preveri, ali je oznaka ime (npr. "temeljna geodetska tocka")
+          const ime = oznaka.toLowerCase();
+          if (imeToSifra.hasOwnProperty(ime)) {
+            sifra = imeToSifra[ime];
+          }
+        }
       }
+    
+      return sifra;
     }
 
     const colorByCode = {
