@@ -231,7 +231,7 @@
 
     const color = colorByCode[code] || "gray";
     const svgUrl = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
-
+  
     if (zoom >= 21) {
           const svgCacheKey = `svg:${code}`;
           const circleCacheKey = `circle:${code}`;
@@ -286,6 +286,7 @@
         }
         return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
       };
+
     
     const ly_sxid_geo_nacrt = new olVectorLayer({
       id: "lyid_sxid_geo_nacrt",
