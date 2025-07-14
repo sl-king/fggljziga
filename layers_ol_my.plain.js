@@ -655,14 +655,15 @@
       if (layerId === 'lyid_sxid_geo_nacrt') {
         const gsx_id = feature.get('GSX_ID');
         const st = feature.get('ST');
-        const stev = st.match(/\d+/g)?.join('') || '';
+          const stev = st.match(/\d+/g)?.join('') || '';
+          const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
         const z = feature.get('Z');
-        const oznaka = feature.get('OZNAKA')|| st || '';
+        const oznaka = feature.get("OZNAKA") || '';
         const opomba = feature.get('OPOMBA');
         const sifra = codeToSifra[code] || "000000";
         const datum_meritve = feature.get('DATUM_MERITVE');
 
-        // 💡 Popravljena logika za določanje šifre
+        // Popravljena logika za določanje šifre
         let sifra = "";
         if (/^\d{6}$/.test(oznaka)) {
           sifra = oznaka;
@@ -708,7 +709,7 @@
           table: [
             ['ID', gsx_id || ''],
             ['Številka', stev || ''],
-            ['Koda',  oznaka.match(/^[A-Za-z]+/)?.[0] || ''],
+            ['Koda',  code || ''],
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
