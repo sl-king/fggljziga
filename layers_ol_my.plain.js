@@ -232,11 +232,10 @@
     const color = colorByCode[code] || "gray";
     const svgUrl = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
 
-    const getFeatureStyle = (feature, zoom, code, color, svgUrl) => {
-      const svgCacheKey = `svg:${code}`;
-      const circleCacheKey = `circle:${code}`;
-
-      if (zoom >= 21) {
+    if (zoom >= 21) {
+          const svgCacheKey = `svg:${code}`;
+          const circleCacheKey = `circle:${code}`;
+      
           // Če je slog že v cache, ga vrni
           if (ly_sxid_geo_nacrt_style_cache.has(svgCacheKey)) {
             return ly_sxid_geo_nacrt_style_cache.get(svgCacheKey);
@@ -285,11 +284,8 @@
             })
           }));
         }
-        const style = ly_sxid_geo_nacrt_style_cache.get(circleCacheKey);
-        feature.setStyle(style); // ← pomembno: vedno posodobi slog glede na zoom
-        return style;
+        return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
       };
-
     
     const ly_sxid_geo_nacrt = new olVectorLayer({
       id: "lyid_sxid_geo_nacrt",
