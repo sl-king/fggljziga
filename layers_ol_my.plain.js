@@ -60,6 +60,11 @@
     OB: "311010", MOST: "330010", ORI: "110040", C: "330120"
   };
 
+  // Obratna preslikava: sifra → code
+  const sifraToCode = Object.fromEntries(
+    Object.entries(codeToSifra).map(([k, v]) => [v, k])
+  );
+
   const imeToSifra = {
     "temeljna geodetska tocka": "110010", "temeljna geodetska tocka z dolocenimi ETRS koordinatami": "110020",
     "izmeritvena geodetska tocka": "110030", "izmeritvena geodetska tocka z dolocenimi ETRS koordinatami": "110040",
@@ -116,6 +121,33 @@
       img.src = url;
     });
   }
+
+  // Funkcija za pridobitev šifre iz oznake
+  function oznakaToSifra(oznaka) {
+    if (!oznaka) return "";
+  
+    if (/^\d{6}$/.test(oznaka)) return oznaka;
+  
+    const code = oznaka.match(/^[A-Z]+/i)?.[0];
+    if (code && codeToSifra[code]) return codeToSifra[code];
+  
+    const ime = oznaka.toLowerCase();
+    return imeToSifra[ime] || "";
+  }
+  
+  // Funkcija za pridobitev kode iz oznake
+  function oznakaToCode(oznaka) {
+    if (!oznaka) return "X";
+  
+    if (/^\d{6}$/.test(oznaka)) return sifraToCode[oznaka] || "X";
+  
+    const code = oznaka.match(/^[A-Z]+/i)?.[0];
+    if (code && codeToSifra[code]) return code;
+  
+    const ime = oznaka.toLowerCase();
+    const sifra = imeToSifra[ime];
+    return sifra ? sifraToCode[sifra] || "X" : "X";
+  }
   
   const ly_sxid_geo_nacrt_style = function (feature) {
     const geomType = feature.getGeometry().getType();
@@ -135,59 +167,7 @@
   
     // --- Za POINT geometrije ---
     const oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
-    
-    // Pretvori mapo codeToSifra v obratno mapo sifraToCode
-    const sifraToCode = Object.fromEntries(
-      Object.entries(codeToSifra).map(([k, v]) => [v, k])
-    );
-    
-    // Pretvori mapo codeToSifra v mapo imeToSifra (vse lowercased)
-    const imeToSifra = Object.fromEntries(
-      Object.entries(codeToSifra).map(([k, v]) => [k.toLowerCase(), v])
-    );
-    
-    // Funkcija za pridobitev šifre iz oznake
-    function oznakaToSifra(oznaka) {
-      let sifra = "";
-    
-      if (/^\d{6}$/.test(oznaka)) {
-        sifra = oznaka;
-      } else {
-        const code = oznaka.match(/^[A-Z]+/i)?.[0];
-        if (code && codeToSifra.hasOwnProperty(code)) {
-          sifra = codeToSifra[code];
-        } else {
-          const ime = oznaka.toLowerCase();
-          if (imeToSifra.hasOwnProperty(ime)) {
-            sifra = imeToSifra[ime];
-          }
-        }
-      }
-    
-      return sifra;
-    }
-
-    // Funkcija za pridobitev kode (npr. "TGT") iz oznake
-    function oznakaToCode(oznaka) {
-      if (!oznaka) return "X";
-    
-      if (/^\d{6}$/.test(oznaka)) {
-        // Če je oznaka šifra (npr. 110010), pridobi kodo iz sifraToCode
-        return sifraToCode[oznaka] || "X";
-      }
-    
-      const code = oznaka.match(/^[A-Z]+/i)?.[0];
-      if (code && codeToSifra.hasOwnProperty(code)) {
-        return code;
-      }
-    
-      const ime = oznaka.toLowerCase();
-      const sifra = imeToSifra[ime];
-      return sifra ? sifraToCode[sifra] || "X" : "X";
-    }
-    
     const code = oznakaToCode(oznaka);
-
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
       PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
