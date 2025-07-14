@@ -153,7 +153,8 @@
         sifra = imeToSifra[ime] || "";
       }
     }
-  
+
+    const code = oznaka.match(/^[A-Z]+/i)?.[0] || "X";
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
       PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
@@ -174,7 +175,6 @@
       POK: "#999999", POG: "#b3b3b3", PCR: "#cccccc", PP: "#e6e6e6", X: "#4A280A"
     };
 
-    const code = oznaka.match(/^[A-Z]+/i)?.[0] || "X";
     const color = colorByCode[code] || "gray";
     const svgUrl = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
   
