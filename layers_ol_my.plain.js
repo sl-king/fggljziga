@@ -233,62 +233,66 @@
     const color = colorByCode[code] || "gray";
     const svgUrl = `https://raw.githubusercontent.com/sl-king/fggljziga/main/svg/${code}.svg?v=${Date.now()}`;
   
-    if (zoom >= 21) {
-          const svgCacheKey = `svg:${code}`;
-          const circleCacheKey = `circle:${code}`;
-      
-          // Če je slog že v cache, ga vrni
-          if (ly_sxid_geo_nacrt_style_cache.has(svgCacheKey)) {
-            return ly_sxid_geo_nacrt_style_cache.get(svgCacheKey);
-          }
-      
-          // Poskusi pridobiti SVG asinhrono, sicer uporabi fallback
-          checkSvgExists(svgUrl).then((exists) => {
-            if (exists) {
-              const style = new olStyle({
-                image: new olIcon({
-                  src: svgUrl,
-                  scale: 0.3,
-                  anchor: [0.5, 0.5],
-                  anchorXUnits: 'fraction',
-                  anchorYUnits: 'fraction',
-                  crossOrigin: 'anonymous'
-                })
-              });
-              ly_sxid_geo_nacrt_style_cache.set(svgCacheKey, style);
-              feature.setStyle(style);
-            } else {
-              if (!ly_sxid_geo_nacrt_style_cache.has(circleCacheKey)) {
-                ly_sxid_geo_nacrt_style_cache.set(circleCacheKey, new olStyle({
-                  image: new olCircle({
-                    radius: 5,
-                    fill: new olFill({ color }),
-                    stroke: new olStroke({ color: "white", width: 1 })
-                  })
-                }));
-              }
-              feature.setStyle(ly_sxid_geo_nacrt_style_cache.get(circleCacheKey));
-            }
-          });
-      
-          return null; // Začasno nič, dokler se ne določi stil asinhrono
-        }
-      
-        // --- Barvni krog pri manjšem zoomu ---
-        const cacheKey = `circle:${code}`;
-        if (!ly_sxid_geo_nacrt_style_cache.has(cacheKey)) {
-          ly_sxid_geo_nacrt_style_cache.set(cacheKey, new olStyle({
-            image: new olCircle({
-              radius: 5,
-              fill: new olFill({ color }),
-              stroke: new olStroke({ color: "white", width: 1 })
-            })
-          }));
-        }
-        return ly_sxid_geo_nacrt_style_cache.get(cacheKey);
-      };
-
+    const svgCacheKey = `svg:${code}`;
+    const circleCacheKey = `circle:${code}`;
     
+    // Če smo na zoom >= 21, poskusi uporabiti SVG
+    if (zoom >= 21) {
+      if (ly_sxid_geo_nacrt_style_cache.has(svgCacheKey)) {
+        return ly_sxid_geo_nacrt_style_cache.get(svgCacheKey);
+      }
+  
+      // Preveri asinhrono, če obstaja SVG, in ga shrani za naslednji klic
+      checkSvgExists(svgUrl).then((exists) => {
+        if (exists) {
+          const style = new olStyle({
+            image: new olIcon({
+              src: svgUrl + `?v=${Date.now()}`,
+              scale: 0.3,
+              anchor: [0.5, 0.5],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'fraction',
+              crossOrigin: 'anonymous'
+            })
+          });
+          ly_sxid_geo_nacrt_style_cache.set(svgCacheKey, style);
+          // Force refresh of the feature style
+          feature.changed();
+        } else {
+          // Fallback to circle if no SVG
+          if (!ly_sxid_geo_nacrt_style_cache.has(circleCacheKey)) {
+            ly_sxid_geo_nacrt_style_cache.set(circleCacheKey, new olStyle({
+              image: new olCircle({
+                radius: 5,
+                fill: new olFill({ color }),
+                stroke: new olStroke({ color: "white", width: 1 })
+              })
+            }));
+          }
+          ly_sxid_geo_nacrt_style_cache.set(svgCacheKey, ly_sxid_geo_nacrt_style_cache.get(circleCacheKey));
+          feature.changed();
+        }
+      });
+  
+      // Medtem vrni krog, dokler ni SVG pripravljen
+      if (ly_sxid_geo_nacrt_style_cache.has(circleCacheKey)) {
+        return ly_sxid_geo_nacrt_style_cache.get(circleCacheKey);
+      }
+    }
+  
+    // Če zoom < 21 ali SVG ni na voljo
+    if (!ly_sxid_geo_nacrt_style_cache.has(circleCacheKey)) {
+      ly_sxid_geo_nacrt_style_cache.set(circleCacheKey, new olStyle({
+        image: new olCircle({
+          radius: 5,
+          fill: new olFill({ color }),
+          stroke: new olStroke({ color: "white", width: 1 })
+        })
+      }));
+    }
+    return ly_sxid_geo_nacrt_style_cache.get(circleCacheKey);
+  };
+        
     const ly_sxid_geo_nacrt = new olVectorLayer({
       id: "lyid_sxid_geo_nacrt",
       name: "GEO Nacrt",
