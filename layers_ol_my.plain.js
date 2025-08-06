@@ -727,6 +727,8 @@
         const st = feature.get('ST');
         const stev = st.match(/\d+/g)?.join('') || '';
         const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
+        const x = feature.get('X');
+        const y = feature.get('Y');
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
         const opomba = feature.get('OPOMBA');
@@ -786,6 +788,8 @@
             ['ID', gsx_id || ''],
             ['Številka', stev || ''],
             ['Koda',  code || ''],
+            ['X', x || ''],
+            ['Y', y || ''],
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
