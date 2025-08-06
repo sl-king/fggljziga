@@ -733,20 +733,28 @@
         const datum_meritve = feature.get('DATUM_MERITVE');
 
        // Uporabi tvojo končno logiko za pretvorbo oznake v šifro
-        let sifra = "";
-        if (/^\d{6}$/.test(oznaka)) {
-          sifra = oznaka;
+      let sifra = "";
+      
+      if (!oznaka) {
+        // Če je oznaka prazna, uporabi code
+        if (codeToSifra.hasOwnProperty(code)) {
+          sifra = codeToSifra[code];
+        }
+      } else if (/^\d{6}$/.test(oznaka)) {
+        // Če je oznaka šifra
+        sifra = oznaka;
+      } else {
+        const codeFromOznaka = oznaka.match(/^[A-Z]+/i)?.[0];
+        if (codeFromOznaka && codeToSifra.hasOwnProperty(codeFromOznaka)) {
+          sifra = codeToSifra[codeFromOznaka];
         } else {
-          const codeFromOznaka = oznaka.match(/^[A-Z]+/i)?.[0];
-          if (codeFromOznaka && codeToSifra.hasOwnProperty(codeFromOznaka)) {
-            sifra = codeToSifra[codeFromOznaka];
-          } else {
-            const ime = oznaka.toLowerCase();
-            if (imeToSifra.hasOwnProperty(ime)) {
-              sifra = imeToSifra[ime];
-            }
+          const ime = oznaka.toLowerCase();
+          if (imeToSifra.hasOwnProperty(ime)) {
+            sifra = imeToSifra[ime];
           }
         }
+      }
+
         
         // Check if this layer is editable
         const metadata = layer.get('metadata');
