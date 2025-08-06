@@ -175,9 +175,11 @@
       oznaka = code;
     }
     
-    // Funkcija za pridobitev šifre iz oznake
+    // Posodobi funkcijo oznakaToSifra kot spodaj
     function oznakaToSifra(oznaka) {
       let sifra = "";
+    
+      if (!oznaka) return sifra;
     
       if (/^\d{6}$/.test(oznaka)) {
         sifra = oznaka;
@@ -189,6 +191,9 @@
           const ime = oznaka.toLowerCase();
           if (imeToSifra.hasOwnProperty(ime)) {
             sifra = imeToSifra[ime];
+          } else if (codeToSifra.hasOwnProperty(oznaka)) {
+            // <- ključna dodatna logika
+            sifra = codeToSifra[oznaka];
           }
         }
       }
@@ -196,12 +201,10 @@
       return sifra;
     }
     
-    // Funkcija za pridobitev kode (npr. "TGT") iz oznake
     function oznakaToCode(oznaka) {
       if (!oznaka) return "X";
     
       if (/^\d{6}$/.test(oznaka)) {
-        // Če je oznaka šifra (npr. 110010), pridobi kodo iz sifraToCode
         return sifraToCode[oznaka] || "X";
       }
     
