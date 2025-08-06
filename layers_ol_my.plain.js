@@ -167,9 +167,14 @@
     }
   
     // --- Za POINT geometrije ---
-    const oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
-    const code = oznakaToCode(oznaka);
-
+    let oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
+    let code = oznakaToCode(oznaka);
+    
+    // Če je oznaka prazna, uporabimo code kot oznako
+    if (!oznaka) {
+      oznaka = code;
+    }
+    
     // Funkcija za pridobitev šifre iz oznake
     function oznakaToSifra(oznaka) {
       let sifra = "";
@@ -190,7 +195,7 @@
     
       return sifra;
     }
-
+    
     // Funkcija za pridobitev kode (npr. "TGT") iz oznake
     function oznakaToCode(oznaka) {
       if (!oznaka) return "X";
@@ -209,6 +214,9 @@
       const sifra = imeToSifra[ime];
       return sifra ? sifraToCode[sifra] || "X" : "X";
     }
+    
+    // Uporabi oznakoToSifra za pridobitev šifre
+    const sifra = oznakaToSifra(oznaka);
     
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
