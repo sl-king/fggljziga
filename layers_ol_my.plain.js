@@ -727,8 +727,13 @@
         const st = feature.get('ST');
         const stev = st.match(/\d+/g)?.join('') || '';
         const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
-        const x = geometry.getCoordinates()[0];
-        const y = geometry.getCoordinates()[1];
+        let x = '';
+        let y = '';
+        if (feature.getGeometry()?.getType() === 'Point') {
+          const coords = feature.getGeometry().getCoordinates();
+          x = coords[0]?.toFixed(2) || '';
+          y = coords[1]?.toFixed(2) || '';
+        }
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
         const opomba = feature.get('OPOMBA');
