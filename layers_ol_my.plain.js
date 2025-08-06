@@ -811,6 +811,8 @@
       if (layerId === 'lyid_sxid_geo_notes') {
         const gsx_id = feature.get('GSX_ID');
         const st = feature.get('ST');
+        const x = feature.get('X');
+        const y = feature.get('Y');
         const z = feature.get('Z');
         const oznaka = feature.get('OZNAKA');
         const opomba = feature.get('OPOMBA');
