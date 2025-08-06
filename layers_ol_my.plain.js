@@ -310,7 +310,7 @@
       source: new olVectorSource({
         url: function (extent) {
           let ext2 = olTransformExtent(extent, appContext.mapproj, d96proj);
-          let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,Z,OZNAKA,OPOMBA,DATUM_MERITVE,SIFRA&bbox=" + ext2.join(",");
+          let u="_sx1/sxtables/sxid_geo_nacrt/data/.json?select=geometry,gsx_id,ST,X,Y,Z,OZNAKA,OPOMBA,DATUM_MERITVE,SIFRA&bbox=" + ext2.join(",");
           return u;
         },
         format: new olGeoJSON({
