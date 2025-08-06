@@ -167,33 +167,34 @@
     }
   
     // --- Za POINT geometrije ---
-    let oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
-    let code = oznakaToCode(oznaka);
+    const oznaka = feature.get("OZNAKA") || feature.get("ST") || "";
+    const code = oznakaToCode(oznaka);
     
-    // Če je oznaka prazna, uporabimo code kot oznako
-    if (!oznaka) {
-      oznaka = code;
-    }
+    // Pridobi šifro
+    const sifra = oznakaToSifra(oznaka, code);
     
-    // Posodobi funkcijo oznakaToSifra kot spodaj
-    function oznakaToSifra(oznaka) {
+    // Funkcija za pridobitev šifre iz oznake ali kode
+    function oznakaToSifra(oznaka, code) {
       let sifra = "";
     
-      if (!oznaka) return sifra;
-    
-      if (/^\d{6}$/.test(oznaka)) {
+      if (!oznaka) {
+        // Če je oznaka prazna, uporabi code za pridobitev šifre
+        if (codeToSifra.hasOwnProperty(code)) {
+          sifra = codeToSifra[code];
+        }
+      } else if (/^\d{6}$/.test(oznaka)) {
+        // Če je oznaka že šifra (npr. 110010)
         sifra = oznaka;
       } else {
-        const code = oznaka.match(/^[A-Z]+/i)?.[0];
-        if (code && codeToSifra.hasOwnProperty(code)) {
-          sifra = codeToSifra[code];
+        // Poskusi najti šifro preko kode iz oznake
+        const oznakaCode = oznaka.match(/^[A-Z]+/i)?.[0];
+        if (oznakaCode && codeToSifra.hasOwnProperty(oznakaCode)) {
+          sifra = codeToSifra[oznakaCode];
         } else {
+          // Poskusi še s polnim imenom
           const ime = oznaka.toLowerCase();
           if (imeToSifra.hasOwnProperty(ime)) {
             sifra = imeToSifra[ime];
-          } else if (codeToSifra.hasOwnProperty(oznaka)) {
-            // <- ključna dodatna logika
-            sifra = codeToSifra[oznaka];
           }
         }
       }
@@ -201,10 +202,12 @@
       return sifra;
     }
     
+    // Funkcija za pridobitev kode (npr. "TGT") iz oznake
     function oznakaToCode(oznaka) {
       if (!oznaka) return "X";
     
       if (/^\d{6}$/.test(oznaka)) {
+        // Če je oznaka šifra (npr. 110010), pridobi kodo iz sifraToCode
         return sifraToCode[oznaka] || "X";
       }
     
@@ -217,10 +220,7 @@
       const sifra = imeToSifra[ime];
       return sifra ? sifraToCode[sifra] || "X" : "X";
     }
-    
-    // Uporabi oznakoToSifra za pridobitev šifre
-    const sifra = oznakaToSifra(oznaka);
-    
+   
     const colorByCode = {
       C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
       PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
