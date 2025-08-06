@@ -852,6 +852,8 @@
           table: [
             ['ID', gsx_id || ''],
             ['ST', st || ''],
+            ['X', x || ''],
+            ['Y', y || ''],
             ['Z', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
