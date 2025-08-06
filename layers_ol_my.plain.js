@@ -727,8 +727,8 @@
         const st = feature.get('ST');
         const stev = st.match(/\d+/g)?.join('') || '';
         const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
-        const x = feature.get('X');
-        const y = feature.get('Y');
+        const x = geometry.getCoordinates()[0];
+        const y = geometry.getCoordinates()[1];
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
         const opomba = feature.get('OPOMBA');
@@ -756,8 +756,7 @@
           }
         }
       }
-
-        
+       
         // Check if this layer is editable
         const metadata = layer.get('metadata');
         const kingEditable = metadata?.king_editable;
