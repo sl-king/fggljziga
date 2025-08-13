@@ -737,8 +737,8 @@
           const coords3857 = feature.getGeometry().getCoordinates();
           // Pretvorba iz trenutnega prikaza (EPSG:3857) v DG96/TM (EPSG:3794)
           const coords3794 = transform(coords3857, 'EPSG:3857', 'EPSG:3794');
-          x = coords3794[0]?.toFixed(2) || '';
-          y = coords3794[1]?.toFixed(2) || '';
+          y = coords3794[0]?.toFixed(2) || '';
+          x = coords3794[1]?.toFixed(2) || '';
         }
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
@@ -798,8 +798,8 @@
             ['ID', gsx_id || ''],
             ['Številka', stev || ''],
             ['Koda',  code || ''],
-            ['E', x || ''],
-            ['N', y || ''],
+            ['E', y || ''],
+            ['N', x || ''],
             ['h', z || ''],
             ['Oznaka', oznaka || ''],
             ['Opomba', opomba || ''],
