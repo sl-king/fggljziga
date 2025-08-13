@@ -731,8 +731,8 @@
         let y = '';
         if (feature.getGeometry()?.getType() === 'Point') {
           const coords = feature.getGeometry().getCoordinates();
-          x = coords[1]?.toFixed(2) || '';
-          y = coords[0]?.toFixed(2) || '';
+          x = coords[0]?.toFixed(2) || '';
+          y = coords[1]?.toFixed(2) || '';
         }
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
