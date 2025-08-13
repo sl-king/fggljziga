@@ -727,28 +727,12 @@
         const st = feature.get('ST');
         const stev = st.match(/\d+/g)?.join('') || '';
         const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
-        
-        import { transform } from 'ol/proj';
-        // Registracija projekcije EPSG:3794 (če še ni registrirana)
-        import { register } from 'ol/proj/proj4';
-        import proj4 from 'proj4';
-        
-        proj4.defs(
-          'EPSG:3794',
-          '+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9999 +x_0=500000 +y_0=-5000000 ' +
-          '+ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
-        );
-        register(proj4);
-        
         let x = '';
         let y = '';
-        
         if (feature.getGeometry()?.getType() === 'Point') {
-          const coords3857 = feature.getGeometry().getCoordinates();
-          // Pretvorba iz trenutnega prikaza (EPSG:3857) v DG96/TM (EPSG:3794)
-          const coords3794 = transform(coords3857, 'EPSG:3857', 'EPSG:3794');
-          y = coords3794[0]?.toFixed(2) || '';
-          x = coords3794[1]?.toFixed(2) || '';
+          const coords = feature.getGeometry().getCoordinates();
+          x = coords[0]?.toFixed(2) || '';
+          y = coords[1]?.toFixed(2) || '';
         }
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
