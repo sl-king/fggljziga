@@ -727,7 +727,9 @@
         const st = feature.get('ST');
         const stev = st.match(/\d+/g)?.join('') || '';
         const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
+        
         import { transform } from 'ol/proj';
+        
         let x = '';
         let y = '';
         
