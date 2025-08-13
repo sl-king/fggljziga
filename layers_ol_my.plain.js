@@ -727,12 +727,16 @@
         const st = feature.get('ST');
         const stev = st.match(/\d+/g)?.join('') || '';
         const code = st ? st.match(/[A-Za-z]/g)?.join('') : 'X';
+        import { transform } from 'ol/proj';
         let x = '';
         let y = '';
+        
         if (feature.getGeometry()?.getType() === 'Point') {
-          const coords = feature.getGeometry().getCoordinates();
-          x = coords[0]?.toFixed(2) || '';
-          y = coords[1]?.toFixed(2) || '';
+          const coords3857 = feature.getGeometry().getCoordinates();
+          // Pretvorba iz trenutnega prikaza (EPSG:3857) v DG96/TM (EPSG:3794)
+          const coords3794 = transform(coords3857, 'EPSG:3857', 'EPSG:3794');
+          x = coords3794[0]?.toFixed(2) || '';
+          y = coords3794[1]?.toFixed(2) || '';
         }
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
