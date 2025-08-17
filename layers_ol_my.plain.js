@@ -23,6 +23,7 @@
     olIcon,
     olText,
     olGeoJSON,
+    olTransform,
     olTransformExtent,
     olBbox
   } = window;
@@ -731,8 +732,10 @@
         let y = '';
         if (feature.getGeometry()?.getType() === 'Point') {
           const coords = feature.getGeometry().getCoordinates();
-          x = coords[1]?.toFixed(2) || '';
-          y = coords[0]?.toFixed(2) || '';
+          // Transform from current map projection to D96 for display
+          const d96Coords = olTransform(coords, appContext.mapproj, d96proj);
+          x = d96Coords[1]?.toFixed(2) || '';
+          y = d96Coords[0]?.toFixed(2) || '';
         }
         const z = feature.get('Z');
         const oznaka = feature.get("OZNAKA") || '';
