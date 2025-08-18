@@ -223,23 +223,23 @@
     }
    
     const colorByCode = {
-      C: "#A1632E", TGT: "#000099", TGTE: "#FF3399", IGT: "#00CC00", IGTE: "#4d4d4d",
-      PG: "#666666", FR: "#808080", R: "#999999", AGT: "#b3b3b3", RGT: "#cccccc",
-      MZD: "#e6e6e6", STOP: "#262626", CERK: "#404040", DIM: "#5c5c5c", NSSP: "#737373",
-      NSSO: "#8c8c8c", OGZ: "#a6a6a6", OGK: "#bfbfbf", ZM: "#d9d9d9", OG: "#f2f2f2",
-      OPZT: "#191919", OPZ: "#2e2e2e", OPZL: "#434343", OPZZ: "#595959", VERK: "#6e6e6e",
-      OSAMG: "#838383", SPOM: "#999999", D: "#aeaeae", ST: "#c3c3c3", STOLP: "#d8d8d8",
-      MZS: "#ededed", MZPK: "#141414", MZK: "#292929", OB: "#3e3e3e", MOST: "#535353",
-      ORI: "#505050", SEM: "#b266ff", IZV: "#00ffff", PIZV: "#00e6e6", CIS: "#00cccc",
-      VODN: "#00b3b3", VODM: "#009999", PONOR: "#008080", PIPA: "#006666", IZL: "#004d4d",
-      SLAP: "#003333", ODBV: "#009900", OS: "#00b300", CER: "#00cc00", LD: "#00e600",
-      ID: "#1aff1a", ZNACID: "#33ff33", ZANCLD: "#4dff4d", GRM: "#66ff66", JO: "#80ff80",
-      JP: "#99ff99", JKO: "#b3ffb3", JKP: "#ccffcc", MZ: "#ff00ff", KOZ: "#ffff00",
-      J: "#e6e600", ZP: "#cccc00", JVO: "#0000ff", JVP: "#1a1aff", Z: "#8B4513",
-      NH: "#333333", PH: "#4d4d4d", JEO: "#ff0000", JEP: "#e60000", DELVN: "#cc0000",
-      ELK: "#b30000", DELVV: "#990000", ELOM: "#800000", JTO: "#ff8000", JTP: "#e67300",
-      DT: "#cc6600", JJRO: "#8000ff", JJRP: "#9933ff", S: "#b266ff", PROP: "#808080",
-      POK: "#999999", POG: "#b3b3b3", PCR: "#cccccc", PP: "#e6e6e6", X: "#4A280A"
+      C: "#A1632E", TGT: "#000000", TGTE: "#000000", IGT: "#000000", IGTE: "#000000",
+      PG: "#000000", FR: "#000000", R: "#000000", AGT: "#000000", RGT: "#000000", 
+      MZD: "#000000", MZ:"FF0000", STOP: "#000000", CERK: "#000000", DIM: "#000000", NSSP: "#000000",
+      NSSO: "#000000", OGZ: "#999DA0", OGK: "#999DA0", ZM: "#4CBB17", OG: "#999DA0",
+      OPZT: "#999DA0", OPZ: "#999DA0", OPZL: "#999DA0", OPZZ: "#999DA0", VERK: "#000000",
+      OSAMG: "#000000", SPOM: "#000000", D: "#000000", ST: "#000000", STOLP: "#000000",
+      MZS: "#000000", MZPK: "#000000", MZK: "#000000", OB: "#877F7D", MOST: "#000000",
+      ORI: "#000000", SEM: "#48494B", IZV: "#00FFFF", PIZV: "#00FFFF", CIS: "#00FFFF",
+      VODN: "#00FFFF", VODM: "#00FFFF", PONOR: "#00FFFF", PIPA: "#00FFFF", IZL: "#00FFFF",
+      SLAP: "#00FFFF", ODBV: "#000000", OS: "#000000", CER: "#000000", LD: "#0B6623",
+      ID: "#0B6623", ZNACID: "#0B6623", ZANCLD: "#0B6623", GRM: "#0B6623", JO: "#4B5320",
+      JP: "#4B5320", JKO: "#007F00", JKP: "#007F00", MZ: "#ff00ff", KOZ: "#ffff00",
+      J: "#000000", ZP: "#FFFF00", JVO: "#1134A6", JVP: "#1134A6", Z: "#1134A6",
+      NH: "#1134A6", PH: "#1134A6", JEO: "#FF0000", JEP: "#FF0000", DELVN: "#FF0000",
+      ELK: "#FF0000", DELVV: "#FF0000", ELOM: "#FF0000", JTO: "#FF7F00", JTP: "#FF7F00",
+      DT: "#FF7F00", JJRO: "#7F00FF", JJRP: "#7F00FF", S: "#7F00FF", PROP: "#88807B",
+      POK: "#88807B", POG: "#88807B", PCR: "#88807B", PP: "#88807B", X: "#FF9999"
     };
 
     const color = colorByCode[code] || "gray";
